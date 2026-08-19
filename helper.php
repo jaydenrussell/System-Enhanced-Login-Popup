@@ -15,8 +15,7 @@ class PlgSystemLoginPopupHelper {
 	 *
 	 * When redirect_enabled is Yes, applies dynamic redirect logic:
 	 *   1. Check redirect_map for matching source_itemid
-	 *   2. If current page is homepage, redirect to homepage_dashboard
-	 *   3. Otherwise, return to current page
+	 *   2. Fallback to current page
 	 *
 	 * When redirect_enabled is No, falls back to original static behavior.
 	 *
@@ -39,7 +38,7 @@ class PlgSystemLoginPopupHelper {
 	}
 
 	/**
-	 * Build a dynamic return URL based on redirect_map rules and homepage fallback.
+	 * Build a dynamic return URL based on redirect_map rules.
 	 *
 	 * @param   JRegistry  $params  plugin parameters
 	 *
@@ -65,15 +64,7 @@ class PlgSystemLoginPopupHelper {
 			}
 		}
 
-		// 2. If current page is homepage, redirect to homepage_dashboard
-		if ($currentId > 0 && $active->home) {
-			$dashboardId = (int) $params->get('homepage_dashboard', 0);
-			if ($dashboardId > 0) {
-				return self::buildItemidUrl($dashboardId);
-			}
-		}
-
-		// 3. Fallback: return to current page
+		// 2. Fallback: return to current page
 		return self::getCurrentPageUrl();
 	}
 
@@ -96,7 +87,7 @@ class PlgSystemLoginPopupHelper {
 	}
 
 	/**
-	 * Get the current page as a base64-encoded internal URL (original fallback).
+	 * Get the current page as a base64-encoded internal URL (fallback).
 	 *
 	 * @return string  base64-encoded URL
 	 */
