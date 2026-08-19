@@ -242,7 +242,7 @@
 				</field>
 			</fieldset>
 
-			<fieldset name="redirect">
+			<fieldset name="redirect" label="PLG_SYSTEM_LOGINPOPUP_FIELDSET_REDIRECT_LABEL">
 				<field
 					name="redirect_enabled"
 					type="radio"
