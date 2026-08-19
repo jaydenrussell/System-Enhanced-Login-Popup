@@ -21,30 +21,15 @@ The original ExtStore login popup style — unchanged and fully functional.
 
 ## Installation
 
-### Package Install (Recommended)
-1. Download `pkg_loginpopup.zip`
+1. Download `plg_system_loginpopup.zip`
 2. Go to **Extensions > Manage > Install** in Joomla admin
 3. Click **Upload Package File** and select the ZIP
 4. Go to **Extensions > Plugins** and enable **System - Enhanced Login Popup**
 5. Configure parameters as needed
 
-### Plugin Install
-1. Download `plg_system_loginpopup.zip`
-2. Go to **Extensions > Manage > Install** in Joomla admin
-3. Click **Upload Package File** and select the ZIP
-4. Go to **Extensions > Plugins** and enable **System - Enhanced Login Popup**
-
 ## Auto-Updates
 
-Add this URL to **Extensions > Manage > Update > Options > Update Server URL**:
-
-```
-https://raw.githubusercontent.com/jaydenrussell/plg_system_loginpopup/master/updates.xml
-```
-
-## Upgrade from v1.0.x
-
-This plugin uses `method="upgrade"` in the manifest. Simply install the new ZIP over the existing plugin — your parameters will be preserved.
+Built-in — the plugin includes an update server URL in its manifest. Joomla will automatically check for new versions via **Extensions > Manage > Update**.
 
 ## License
 
