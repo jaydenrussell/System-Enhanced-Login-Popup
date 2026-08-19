@@ -263,7 +263,7 @@
 					multiple="true"
 					min="0"
 					max="50"
-					formsource="layouts/fields/redirect_map.xml"
+					formsource="plugins/system/loginpopup/layouts/fields/redirect_map.xml"
 				/>
 			</fieldset>
 		</fields>
