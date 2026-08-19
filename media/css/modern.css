@@ -1,0 +1,538 @@
+/**
+ * @copyright	Copyright (c) 2014 Skyline Technology Ltd (http://extstore.com). All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ * Modern Layout - Simcoe Curling Club
+ * All styles scoped under .lp-modern to avoid affecting Default layout
+ */
+
+/* ==========================================================================
+   MODAL CONTAINER
+   ========================================================================== */
+
+.lp-modern {
+	width: 400px;
+	max-width: calc(100vw - 32px);
+	padding: 32px;
+	border-radius: 16px;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+	background: #ffffff;
+	color: #374151;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	overflow: visible;
+}
+
+/* ==========================================================================
+   CLOSE BUTTON - Top Right
+   ========================================================================== */
+
+.lp-modern .lp-close {
+	background: none;
+	border: none;
+	color: #9ca3af;
+	font-size: 24px;
+	line-height: 1;
+	padding: 8px;
+	margin: 0;
+	position: absolute;
+	right: 12px;
+	top: 12px;
+	height: 40px;
+	width: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 8px;
+	transition: color 0.2s ease, background-color 0.2s ease;
+	cursor: pointer;
+	z-index: 10;
+}
+
+.lp-modern .lp-close:hover {
+	color: #374151;
+	background-color: #f3f4f6;
+}
+
+/* ==========================================================================
+   LOGO - Inside card, sized via parameter
+   ========================================================================== */
+
+.lp-modern-logo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 40px;
+}
+
+.lp-modern-logo img {
+	width: auto;
+	object-fit: contain;
+	transition: height 0.2s ease;
+}
+
+/* Logo size classes - !important to override cache */
+.lp-modern .lp-logo-size-small {
+	height: 60px !important;
+	max-width: 140px !important;
+}
+
+.lp-modern .lp-logo-size-medium {
+	height: 90px !important;
+	max-width: 200px !important;
+}
+
+.lp-modern .lp-logo-size-large {
+	height: 120px !important;
+	max-width: 260px !important;
+}
+
+/* ==========================================================================
+   FORM HEADING (Customizable) / GREETING
+   ========================================================================== */
+
+.lp-modern h3 {
+	color: #111827;
+	font-size: 20px;
+	font-weight: 600;
+	margin: 0 0 28px;
+	text-align: center;
+	letter-spacing: -0.01em;
+	line-height: 1.3;
+}
+
+/* Greeting (logout layout) */
+.lp-modern .lp-modern-greeting {
+	text-align: center;
+	font-size: 18px;
+	color: #111827;
+	font-weight: 500;
+	margin-bottom: 28px;
+	padding: 0;
+}
+
+/* ==========================================================================
+   FORM ELEMENTS
+   ========================================================================== */
+
+.lp-modern .lp-form {
+	margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Labels
+   -------------------------------------------------------------------------- */
+
+.lp-modern .lp-field-wrapper label {
+	display: block;
+	margin: 0 0 6px;
+	font-size: 13px;
+	font-weight: 500;
+	color: #374151;
+}
+
+/* --------------------------------------------------------------------------
+   Text Inputs
+   -------------------------------------------------------------------------- */
+
+.lp-modern .lp-field-wrapper input.lp-input-text {
+	background: #f9fafb;
+	color: #111827;
+	border: 1.5px solid #e5e7eb;
+	box-sizing: border-box;
+	outline: none;
+	width: 100%;
+	padding: 10px 12px;
+	margin-bottom: 0;
+	height: auto;
+	min-height: 44px;
+	border-radius: 10px;
+	font-size: 15px;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.lp-modern .lp-field-wrapper input.lp-input-text::placeholder {
+	color: #9ca3af;
+}
+
+.lp-modern .lp-field-wrapper input.lp-input-text:focus {
+	border-color: #305789;
+	background: #ffffff;
+	box-shadow: 0 0 0 3px rgba(48, 87, 137, 0.12);
+}
+
+/* Username and password icon inputs */
+.lp-modern .lp-field-wrapper input.lp-input-username,
+.lp-modern .lp-field-wrapper input.lp-input-password {
+	background-repeat: no-repeat;
+	background-position: 12px center;
+	background-size: 18px;
+	padding-left: 40px;
+}
+
+.lp-modern .lp-field-wrapper input.lp-input-username {
+	background-image: url('../images/cd-icon-username.svg');
+}
+
+.lp-modern .lp-field-wrapper input.lp-input-password {
+	background-image: url('../images/cd-icon-password.svg');
+}
+
+/* --------------------------------------------------------------------------
+   Password Field + Toggle
+   -------------------------------------------------------------------------- */
+
+.lp-modern .lp-password-wrap {
+	position: relative;
+}
+
+.lp-modern .lp-password-wrap .lp-input-password {
+	padding-right: 48px;
+}
+
+.lp-modern .lp-pass-toggle {
+	position: absolute;
+	right: 4px;
+	bottom: 4px;
+	top: auto;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 8px;
+	color: #9ca3af;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 8px;
+	transition: color 0.2s ease, background-color 0.2s ease;
+	min-width: 40px;
+	min-height: 40px;
+}
+
+.lp-modern .lp-pass-toggle:hover {
+	color: #374151;
+	background-color: #f3f4f6;
+}
+
+.lp-modern .lp-pass-toggle:focus {
+	outline: 2px solid #305789;
+	outline-offset: 2px;
+}
+
+.lp-modern .lp-pass-toggle svg {
+	flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Remember Me - Inline with Forgot Link
+   -------------------------------------------------------------------------- */
+
+.lp-modern .lp-remember-wrap {
+	margin-top: 8px;
+}
+
+.lp-modern .lp-remember-inline {
+	display: flex !important;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+	font-size: 14px;
+	color: #6b7280;
+	user-select: none;
+	padding: 4px 0;
+}
+
+.lp-modern .lp-remember-inline input.lp-input-checkbox {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.lp-modern .lp-checkmark {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	border: 1.5px solid #d1d5db;
+	border-radius: 6px;
+	background: #f9fafb;
+	flex-shrink: 0;
+	transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.lp-modern .lp-checkmark::after {
+	content: '';
+	display: none;
+	width: 6px;
+	height: 10px;
+	border: solid #ffffff;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+	margin-bottom: 2px;
+}
+
+.lp-modern .lp-remember-inline input.lp-input-checkbox:checked ~ .lp-checkmark {
+	background: #305789;
+	border-color: #305789;
+}
+
+.lp-modern .lp-remember-inline input.lp-input-checkbox:checked ~ .lp-checkmark::after {
+	display: block;
+}
+
+.lp-modern .lp-remember-inline input.lp-input-checkbox:focus ~ .lp-checkmark {
+	box-shadow: 0 0 0 3px rgba(48, 87, 137, 0.12);
+}
+
+/* --------------------------------------------------------------------------
+   Button Wrapper - Remember + Forgot on left, Button on right
+   -------------------------------------------------------------------------- */
+
+.lp-modern .lp-button-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 24px;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.lp-modern .lp-forgot-wrap {
+	flex-shrink: 0;
+	min-width: 0;
+}
+
+.lp-modern .lp-modern-forgot {
+	display: inline-block;
+	color: #305789;
+	text-decoration: none;
+	font-size: 13px;
+	font-weight: 500;
+	transition: color 0.2s ease;
+	white-space: nowrap;
+}
+
+.lp-modern .lp-modern-forgot:hover {
+	color: #3d6da3;
+	text-decoration: underline;
+}
+
+.lp-modern .lp-left .lp-button {
+	display: block;
+	width: 100%;
+	min-width: 180px;
+	background: #305789;
+	color: #ffffff;
+	padding: 12px 24px;
+	border: none;
+	font-size: 15px;
+	font-weight: 600;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background-color 0.2s ease, box-shadow 0.2s ease;
+	min-height: 48px;
+	letter-spacing: 0.01em;
+}
+
+.lp-modern .lp-left .lp-button:hover {
+	background: #3d6da3;
+	box-shadow: 0 2px 8px rgba(48, 87, 137, 0.3);
+}
+
+.lp-modern .lp-left .lp-button:active {
+	background: #264a6e;
+	box-shadow: none;
+	transform: translateY(1px);
+}
+
+.lp-modern .lp-left .lp-button:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(48, 87, 137, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   Signup Section - Centered under button
+   -------------------------------------------------------------------------- */
+
+.lp-modern .lp-modern-signup {
+	display: block;
+	width: 100%;
+	text-align: center;
+	margin-top: 24px;
+	padding-top: 20px;
+	border-top: 1px solid #e5e7eb;
+	font-size: 14px;
+	color: #6b7280;
+	line-height: 1.5;
+}
+
+.lp-modern .lp-modern-signup span {
+	display: inline-block;
+	margin-right: 6px;
+	font-weight: 500;
+}
+
+.lp-modern .lp-modern-signup a {
+	color: #305789;
+	text-decoration: underline;
+	font-weight: 600;
+	transition: color 0.2s ease;
+}
+
+.lp-modern .lp-modern-signup a:hover {
+	color: #3d6da3;
+}
+
+/* --------------------------------------------------------------------------
+   Two-Factor Auth Field
+   -------------------------------------------------------------------------- */
+
+.lp-modern .lp-field-wrapper input.lp-input-text[name="secretkey"] {
+	padding-left: 12px;
+	background-image: none;
+}
+
+/* ==========================================================================
+   OVERLAY - Slightly darker for modern feel
+   ========================================================================== */
+
+#lp-overlay.lp-open {
+	background: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 480px) {
+	.lp-modern {
+		width: calc(100vw - 32px);
+		padding: 24px;
+		border-radius: 12px;
+	}
+
+	.lp-modern .lp-logo-size-small {
+		height: 50px;
+		max-width: 120px;
+	}
+
+	.lp-modern .lp-logo-size-medium {
+		height: 70px;
+		max-width: 160px;
+	}
+
+	.lp-modern .lp-logo-size-large {
+		height: 90px;
+		max-width: 200px;
+	}
+
+	.lp-modern h3 {
+		font-size: 18px;
+	}
+
+	.lp-modern .lp-field-wrapper input.lp-input-text {
+		font-size: 16px; /* prevents iOS zoom on focus */
+		min-height: 48px;
+	}
+
+	.lp-modern .lp-left .lp-button {
+		min-height: 50px;
+		font-size: 16px;
+		min-width: 100%;
+	}
+
+	.lp-modern .lp-button-wrapper {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.lp-modern .lp-forgot-wrap {
+		order: 2;
+	}
+
+	.lp-modern .lp-left {
+		order: 1;
+	}
+
+	.lp-modern .lp-left .lp-button {
+		width: 100%;
+	}
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+	.lp-modern {
+		padding: 20px 16px;
+	}
+
+	.lp-modern .lp-logo-size-small {
+		height: 44px;
+		max-width: 100px;
+	}
+
+	.lp-modern .lp-logo-size-medium {
+		height: 60px;
+		max-width: 130px;
+	}
+
+	.lp-modern .lp-logo-size-large {
+		height: 76px;
+		max-width: 160px;
+	}
+}
+
+/* ==========================================================================
+   ACCESSIBILITY
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+	.lp-modern .lp-close,
+	.lp-modern .lp-pass-toggle,
+	.lp-modern .lp-button-wrapper .lp-button {
+		transition: none;
+	}
+}
+
+/* High contrast mode */
+@media (forced-colors: active) {
+	.lp-modern .lp-checkmark {
+		border: 2px solid ButtonText;
+	}
+
+.lp-modern .lp-checkmark::after {
+		border-color: ButtonText;
+	}
+}
+
+/* ==========================================================================
+   OVERLAY - Full page blur (z-index above Astroid header ~1002)
+   ========================================================================== */
+
+#lp-overlay.lp-open {
+	z-index: 2000;
+	background: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+}
+
+.lp-wrapper.lp-open {
+	z-index: 2001;
+}
+
+/* Mobile adjustments for top positioned modal */
+@media (max-width: 480px) {
+	.lp-modern[data-position="top"] {
+		top: 50px !important;
+	}
+}
+
+	.lp-modern .lp-button-wrapper .lp-button {
+		forced-color-adjust: none;
+	}
+}
