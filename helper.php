@@ -1,6 +1,7 @@
 <?php
 /**
  * @copyright	Copyright (c) 2014 Skyline Technology Ltd (http://extstore.com). All rights reserved.
+ * @copyright	Copyright (c) 2026 Jayden Russell. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 

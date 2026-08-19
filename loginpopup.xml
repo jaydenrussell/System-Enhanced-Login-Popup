@@ -2,21 +2,22 @@
 <!--
 /**
  * @copyright	Copyright (c) 2014 Skyline Technology Ltd (http://extstore.com). All rights reserved.
+ * @copyright	Copyright (c) 2026 Jayden Russell. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 -->
 <extension type="plugin" version="3.0" group="system" method="upgrade">
 	<name>plg_system_loginpopup</name>
-	<author>ExtStore</author>
+	<author>Jayden Russell</author>
 	<creationDate>October 2014</creationDate>
-	<copyright>Copyright (c) 2014 ExtStore. All rights reserved.</copyright>
+	<copyright>Copyright (c) 2014 ExtStore. Copyright (c) 2026 Jayden Russell. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<authorEmail>admin@extstore.com</authorEmail>
-	<authorUrl>http://extstore.com</authorUrl>
+	<authorEmail>jaydenrussell@users.noreply.github.com</authorEmail>
+	<authorUrl>https://github.com/jaydenrussell</authorUrl>
 	<version>2.0.0</version>
 	<description>
 	<![CDATA[
-		Login popup plugin with Modern layout option featuring club logo, password toggle, customizable branding, and full-page blur. Based on ExtStore Login Popup v1.0.1 for Joomla 3.x.
+		Enhanced Login Popup — Modern layout with club branding, password toggle, customizable title, full-page blur, and responsive design. Originally based on ExtStore Login Popup v1.0.1 for Joomla 3.x.
 	]]>
 	</description>
 
