@@ -34,11 +34,11 @@ $modalPosition = $displayData->get('modal_position', 'center');
 ?>
 
 <div id="lp-overlay"></div>
-<div id="lp-popup" class="lp-wrapper lp-modern" data-position="<?php echo $modalPosition; ?>">
+<div id="lp-popup" class="lp-wrapper lp-modern" data-position="<?php echo htmlspecialchars($modalPosition, ENT_QUOTES, 'UTF-8'); ?>">
 	<button class="lp-close" type="button" title="Close (Esc)">&times;</button>
 
 	<div class="lp-modern-logo" id="lp-modern-logo">
-		<img src="<?php echo JRoute::_($logo); ?>" alt="Club Logo" class="lp-logo-size-<?php echo $logoSize; ?>" />
+		<img src="<?php echo htmlspecialchars(JRoute::_($logo), ENT_QUOTES, 'UTF-8'); ?>" alt="Club Logo" class="lp-logo-size-<?php echo htmlspecialchars($logoSize, ENT_QUOTES, 'UTF-8'); ?>" />
 	</div>
 
 	<form action="<?php echo JRoute::_('index.php', true, $displayData->get('usesecure')); ?>" method="post" class="lp-form" autocomplete="on">

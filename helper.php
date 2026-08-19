@@ -11,26 +11,146 @@ defined('_JEXEC') or die;
 
 class PlgSystemLoginPopupHelper {
 	/**
-	 * Retrieve the url where the user should be returned after logging in
+	 * Retrieve the url where the user should be returned after logging in.
 	 *
-	 * @param   JRegistry  $params  module parameters
-	 * @param   string     $type    return type
+	 * When redirect_enabled is Yes, applies dynamic redirect logic:
+	 *   1. Check redirect_map for matching source_itemid
+	 *   2. If current page is homepage, redirect to homepage_dashboard
+	 *   3. Otherwise, return to current page
 	 *
-	 * @return string
+	 * When redirect_enabled is No, falls back to original static behavior.
+	 *
+	 * @param   JRegistry  $params  plugin parameters
+	 * @param   string     $type    return type ('login' or 'logout')
+	 *
+	 * @return string  base64-encoded internal URL
 	 */
 	public static function getReturnURL($params, $type) {
-		$app	= JFactory::getApplication();
+		$app    = JFactory::getApplication();
 		$router = $app::getRouter();
-		$url = null;
 
-		if ($itemid = $params->get($type)) {
-			$db		= JFactory::getDbo();
-			$query	= $db->getQuery(true)
-					   ->select($db->quoteName('link'))
-					   ->from($db->quoteName('#__menu'))
-					   ->where($db->quoteName('published') . '=1')
-					   ->where($db->quoteName('id') . '=' . $db->quote($itemid))
-			;
+		// Dynamic redirect only applies to login, not logout
+		if ($type === 'login' && (int) $params->get('redirect_enabled', 0) === 1) {
+			return self::getDynamicReturnURL($params);
+		}
+
+		// Original static behavior
+		return self::getStaticReturnURL($params, $type);
+	}
+
+	/**
+	 * Build a dynamic return URL based on redirect_map rules and homepage fallback.
+	 *
+	 * @param   JRegistry  $params  plugin parameters
+	 *
+	 * @return string  base64-encoded internal URL
+	 */
+	private static function getDynamicReturnURL($params) {
+		$app        = JFactory::getApplication();
+		$menu       = $app->getMenu();
+		$active     = $menu->getActive();
+		$currentId  = $active ? (int) $active->id : 0;
+
+		// 1. Check redirect_map for matching source_itemid
+		$redirectMap = $params->get('redirect_map', array());
+
+		if (!empty($redirectMap) && is_array($redirectMap)) {
+			foreach ($redirectMap as $rule) {
+				$sourceId = isset($rule->source_itemid) ? (int) $rule->source_itemid : 0;
+				$targetId = isset($rule->target_itemid) ? (int) $rule->target_itemid : 0;
+
+				if ($sourceId > 0 && $targetId > 0 && $sourceId === $currentId) {
+					return self::buildItemidUrl($targetId);
+				}
+			}
+		}
+
+		// 2. If current page is homepage, redirect to homepage_dashboard
+		if ($currentId > 0 && $active->home) {
+			$dashboardId = (int) $params->get('homepage_dashboard', 0);
+			if ($dashboardId > 0) {
+				return self::buildItemidUrl($dashboardId);
+			}
+		}
+
+		// 3. Fallback: return to current page
+		return self::getCurrentPageUrl();
+	}
+
+	/**
+	 * Build a base64-encoded internal URL from a menu item ID.
+	 *
+	 * @param   int  $itemid  menu item ID
+	 *
+	 * @return string  base64-encoded URL
+	 */
+	private static function buildItemidUrl($itemid) {
+		$itemid = (int) $itemid;
+		if ($itemid <= 0) {
+			return self::getCurrentPageUrl();
+		}
+
+		$url = 'index.php?Itemid=' . $itemid;
+
+		return base64_encode($url);
+	}
+
+	/**
+	 * Get the current page as a base64-encoded internal URL (original fallback).
+	 *
+	 * @return string  base64-encoded URL
+	 */
+	private static function getCurrentPageUrl() {
+		$app    = JFactory::getApplication();
+		$router = $app::getRouter();
+		$url    = null;
+
+		$uri   = clone JUri::getInstance();
+		$vars  = $router->parse($uri);
+		unset($vars['lang']);
+
+		if ($router->getMode() == JROUTER_MODE_SEF) {
+			if (isset($vars['Itemid'])) {
+				$itemid = $vars['Itemid'];
+				$menu   = $app->getMenu();
+				$item   = $menu->getItem($itemid);
+				unset($vars['Itemid']);
+
+				if (isset($item) && $vars == $item->query) {
+					$url = 'index.php?Itemid=' . $itemid;
+				} else {
+					$url = 'index.php?' . JUri::buildQuery($vars) . '&Itemid=' . $itemid;
+				}
+			} else {
+				$url = 'index.php?' . JUri::buildQuery($vars);
+			}
+		} else {
+			$url = 'index.php?' . JUri::buildQuery($vars);
+		}
+
+		return base64_encode($url);
+	}
+
+	/**
+	 * Original static return URL logic (used when redirect_enabled is No).
+	 *
+	 * @param   JRegistry  $params  plugin parameters
+	 * @param   string     $type    return type
+	 *
+	 * @return string  base64-encoded URL
+	 */
+	private static function getStaticReturnURL($params, $type) {
+		$app    = JFactory::getApplication();
+		$router = $app::getRouter();
+		$url    = null;
+
+		if ($itemid = (int) $params->get($type)) {
+			$db    = JFactory::getDbo();
+			$query = $db->getQuery(true)
+				->select($db->quoteName('link'))
+				->from($db->quoteName('#__menu'))
+				->where($db->quoteName('published') . '=1')
+				->where($db->quoteName('id') . '=' . $db->quote($itemid));
 
 			$db->setQuery($query);
 
@@ -44,32 +164,10 @@ class PlgSystemLoginPopupHelper {
 		}
 
 		if (!$url) {
-			// Stay on the same page
-			$uri = clone JUri::getInstance();
-			$vars = $router->parse($uri);
-			unset($vars['lang']);
-
-			if ($router->getMode() == JROUTER_MODE_SEF) {
-				if (isset($vars['Itemid'])) {
-					$itemid = $vars['Itemid'];
-					$menu = $app->getMenu();
-					$item = $menu->getItem($itemid);
-					unset($vars['Itemid']);
-
-					if (isset($item) && $vars == $item->query) {
-						$url = 'index.php?Itemid=' . $itemid;
-					} else {
-						$url = 'index.php?' . JUri::buildQuery($vars) . '&Itemid=' . $itemid;
-					}
-				} else {
-					$url = 'index.php?' . JUri::buildQuery($vars);
-				}
-			} else {
-				$url = 'index.php?' . JUri::buildQuery($vars);
-			}
+			$url = self::getCurrentPageUrl();
 		}
 
-		return base64_encode($url);
+		return $url;
 	}
 
 	/**

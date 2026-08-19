@@ -14,10 +14,10 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>jaydenrussell@users.noreply.github.com</authorEmail>
 	<authorUrl>https://github.com/jaydenrussell</authorUrl>
-	<version>2.0.0</version>
+	<version>3.0.0</version>
 	<description>
 	<![CDATA[
-		Enhanced Login Popup — Modern layout with club branding, password toggle, customizable title, full-page blur, and responsive design. Originally based on ExtStore Login Popup v1.0.1 for Joomla 3.x.
+		Enhanced Login Popup — Modern layout with club branding, password toggle, customizable title, full-page blur, responsive design, and dynamic page-based redirect rules. Originally based on ExtStore Login Popup v1.0.1 for Joomla 3.x.
 	]]>
 	</description>
 
@@ -240,6 +240,41 @@
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
+			</fieldset>
+
+			<fieldset name="redirect">
+				<field
+					name="redirect_enabled"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="0"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_REDIRECT_ENABLED_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_REDIRECT_ENABLED_DESC"
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field
+					name="homepage_dashboard"
+					type="menuitem"
+					disable="separator"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_HOMEPAGE_DASHBOARD_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_HOMEPAGE_DASHBOARD_DESC"
+				>
+					<option value="">JDEFAULT</option>
+				</field>
+
+				<field
+					name="redirect_map"
+					type="subform"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_REDIRECT_MAP_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_REDIRECT_MAP_DESC"
+					multiple="true"
+					min="0"
+					max="50"
+					formsource="layouts/fields/redirect_map.xml"
+				/>
 			</fieldset>
 		</fields>
 	</config>
