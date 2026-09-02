@@ -21,7 +21,7 @@
 	]]>
 	</description>
 
-	<updateserver>https://raw.githubusercontent.com/jaydenrussell/System-Enhanced-Login-Popup/master/updates.xml</updateserver>
+	<updateserver>https://github.com/jaydenrussell/System-Enhanced-Login-Popup/releases/latest/download/updates.xml</updateserver>
 
 	<files>
 		<folder>layouts</folder>
