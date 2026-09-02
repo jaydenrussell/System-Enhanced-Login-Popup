@@ -5,13 +5,14 @@
  */
 
 require_once JPATH_SITE . '/components/com_users/helpers/route.php';
-require_once JPATH_PLUGINS . '/system/loginpopup/helper.php';
+require_once dirname(dirname(__FILE__)) . '/helper.php';
 
 $return				= PlgSystemLoginPopupHelper::getReturnURL($displayData, 'login');
 $twofactormethods	= PlgSystemLoginPopupHelper::getTwoFactorMethods();
+$clientConfig		= PlgSystemLoginPopupHelper::encodeClientConfig(PlgSystemLoginPopupHelper::getClientConfig($displayData));
 
-$logo = $displayData->get('logo', '');
-if (empty($logo)) {
+$logo = PlgSystemLoginPopupHelper::getSafeLogo($displayData->get('logo', ''));
+if ($logo === '') {
 	$logo = 'images/Logo/scc_logo.png';
 }
 
@@ -34,7 +35,7 @@ $modalPosition = $displayData->get('modal_position', 'center');
 ?>
 
 <div id="lp-overlay"></div>
-<div id="lp-popup" class="lp-wrapper lp-modern" data-position="<?php echo htmlspecialchars($modalPosition, ENT_QUOTES, 'UTF-8'); ?>">
+<div id="lp-popup" class="lp-wrapper lp-modern" data-lp-config="<?php echo htmlspecialchars($clientConfig, ENT_QUOTES, 'UTF-8'); ?>" data-position="<?php echo htmlspecialchars($modalPosition, ENT_QUOTES, 'UTF-8'); ?>">
 	<button class="lp-close" type="button" title="Close (Esc)">&times;</button>
 
 	<div class="lp-modern-logo" id="lp-modern-logo">

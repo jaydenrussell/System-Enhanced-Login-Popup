@@ -5,14 +5,15 @@
  */
 
 require_once JPATH_SITE . '/components/com_users/helpers/route.php';
-require_once JPATH_PLUGINS . '/system/loginpopup/helper.php';
+require_once dirname(dirname(__FILE__)) . '/helper.php';
 
-$return	= PlgSystemLoginPopupHelper::getReturnURL($displayData, 'logout');
-$user	= JFactory::getUser();
+$return			= PlgSystemLoginPopupHelper::getReturnURL($displayData, 'logout');
+$user			= JFactory::getUser();
+$clientConfig	= PlgSystemLoginPopupHelper::encodeClientConfig(PlgSystemLoginPopupHelper::getClientConfig($displayData));
 ?>
 
 <div id="lp-overlay"></div>
-<div id="lp-popup" class="lp-wrapper">
+<div id="lp-popup" class="lp-wrapper" data-lp-config="<?php echo htmlspecialchars($clientConfig, ENT_QUOTES, 'UTF-8'); ?>">
 	<button class="lp-close" type="button" title="Close (Esc)">×</button>
 
 	<form action="<?php echo JRoute::_('index.php', true, $displayData->get('usesecure')); ?>" method="post" class="lp-form">

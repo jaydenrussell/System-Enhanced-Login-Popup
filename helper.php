@@ -171,4 +171,83 @@ class PlgSystemLoginPopupHelper {
 
 		return UsersHelper::getTwoFactorMethods();
 	}
+
+	/**
+	 * Build the JSON-safe client configuration consumed by init.js.
+	 *
+	 * All values are normalized (int casts, defaults). The returned array is
+	 * emitted as a base64 data attribute on the popup markup and decoded by the
+	 * browser at DOM ready, which removes any dependency on script/config load
+	 * ordering in the document <head>.
+	 *
+	 * @param   JRegistry  $params  plugin parameters
+	 *
+	 * @return  array
+	 */
+	public static function getClientConfig($params) {
+		return array(
+			'selector'         => (string) $params->get('selector', 'a[href="#login"], a[href="#logout"]'),
+			'offset_top'       => (int) $params->get('offset_top', 50),
+			'modal_position'   => (string) $params->get('modal_position', 'center'),
+			'modal_top_offset' => (int) $params->get('modal_top_offset', 50),
+			'unblur_header'    => (int) $params->get('unblur_header', 1),
+			'unblur_selector'  => (string) $params->get('unblur_selector', ''),
+			'unblur_zindex'    => (int) $params->get('unblur_zindex', 2002),
+		);
+	}
+
+	/**
+	 * Encode an array as a safe base64 JSON payload for a data attribute.
+	 *
+	 * base64 output contains only [A-Za-z0-9+/=], so it cannot break out of an
+	 * HTML attribute; JSON_HEX_* flags additionally neutralize any </script>
+	 * sequence should the payload ever be inlined directly into a script block.
+	 *
+	 * @param   array  $data  data to encode
+	 *
+	 * @return  string
+	 */
+	public static function encodeClientConfig($data) {
+		$json = json_encode(
+			(array) $data,
+			JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
+		);
+
+		return base64_encode($json);
+	}
+
+	/**
+	 * Return a validated logo path, or an empty string if the configured value
+	 * is not a safe http(s) or root-relative path.
+	 *
+	 * Prevents javascript:/data: URI injection through the (admin-set) logo
+	 * parameter being rendered into an <img src>.
+	 *
+	 * @param   string  $logo  configured logo value
+	 *
+	 * @return  string
+	 */
+	public static function getSafeLogo($logo) {
+		$logo = trim((string) $logo);
+
+		if ($logo === '') {
+			return '';
+		}
+
+		// Root-relative paths (/, images/, etc.) or absolute http(s) URLs only.
+		if (preg_match('~^https?://~i', $logo)) {
+			return $logo;
+		}
+
+		if (!preg_match('~^(/|\./|\.\./|[a-z0-9_./-]+$)~i', $logo)) {
+			return '';
+		}
+
+		// Reject any scheme-looking prefix (e.g. javascript:, data:, vbscript:).
+		if (preg_match('~^[a-z][a-z0-9+.-]*:~i', $logo)) {
+			return '';
+		}
+
+		return $logo;
+	}
 }

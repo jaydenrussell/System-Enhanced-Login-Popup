@@ -5,14 +5,15 @@
  */
 
 require_once JPATH_SITE . '/components/com_users/helpers/route.php';
-require_once JPATH_PLUGINS . '/system/loginpopup/helper.php';
+require_once dirname(dirname(__FILE__)) . '/helper.php';
 
 $return				= PlgSystemLoginPopupHelper::getReturnURL($displayData, 'login');
 $twofactormethods	= PlgSystemLoginPopupHelper::getTwoFactorMethods();
+$clientConfig		= PlgSystemLoginPopupHelper::encodeClientConfig(PlgSystemLoginPopupHelper::getClientConfig($displayData));
 ?>
 
 <div id="lp-overlay"></div>
-<div id="lp-popup" class="lp-wrapper">
+<div id="lp-popup" class="lp-wrapper" data-lp-config="<?php echo htmlspecialchars($clientConfig, ENT_QUOTES, 'UTF-8'); ?>">
 	<div class="lp-register-intro">
 		<?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_REGISTER_INTRO'); ?>
 		<a href="<?php echo JRoute::_('index.php?option=com_users&view=registration&Itemid=' . UsersHelperRoute::getRegistrationRoute()); ?>"><?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_REGISTER_NOW'); ?></a>

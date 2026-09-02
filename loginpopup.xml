@@ -14,7 +14,7 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>jaydenrussell@users.noreply.github.com</authorEmail>
 	<authorUrl>https://github.com/jaydenrussell</authorUrl>
-	<version>3.0.6</version>
+	<version>3.0.7</version>
 	<description>
 	<![CDATA[
 		Enhanced Login Popup — Modern layout with club branding, password toggle, customizable title, full-page blur, responsive design, and dynamic page-based redirect rules (subform-driven). Originally based on ExtStore Login Popup v1.0.1 for Joomla 3.x.
@@ -117,6 +117,14 @@
 					default="#astroid-header, #astroid-sticky-header, .astroid-header, .astroid-topbar, header, .navbar, .astroid-module-position.top-header-navbar"
 					label="PLG_SYSTEM_LOGINPOPUP_FIELD_UNBLUR_SELECTOR_LABEL"
 					description="PLG_SYSTEM_LOGINPOPUP_FIELD_UNBLUR_SELECTOR_DESC"
+				/>
+
+				<field
+					name="unblur_zindex"
+					type="text"
+					default="2002"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_UNBLUR_ZINDEX_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_UNBLUR_ZINDEX_DESC"
 				/>
 
 				<!-- Modern Layout Customization -->

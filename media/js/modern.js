@@ -124,8 +124,10 @@
 					el.dataset.originalZIndex = originalZ === 'auto' ? '' : originalZ;
 					
 					if (doUnblur) {
-						// Yes = boost ABOVE overlay (2000) and modal (2001) so it stays sharp
-						el.style.zIndex = '2002';
+						// Yes = boost selected elements ABOVE the overlay (2000)
+						// and modal (2001). The target z-index is configurable
+						// via the unblur_zindex plugin parameter.
+						el.style.zIndex = this.unblur_zindex || 2002;
 					} else {
 						// No = leave as-is (overlay at 2000 will cover it naturally)
 					}
