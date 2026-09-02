@@ -21,7 +21,7 @@
 	]]>
 	</description>
 
-	<updateserver>https://raw.githubusercontent.com/jaydenrussell/plg_system_loginpopup/master/updates.xml</updateserver>
+	<updateserver>https://raw.githubusercontent.com/jaydenrussell/System-Enhanced-Login-Popup/master/updates.xml</updateserver>
 
 	<files>
 		<folder>layouts</folder>
