@@ -1,9 +1,9 @@
 <updates>
 	<update>
 		<name>plg_system_loginpopup</name>
-		<version>3.0.1</version>
+		<version>3.0.4</version>
 		<infourl title="Enhanced Login Popup">https://github.com/jaydenrussell/plg_system_loginpopup</infourl>
-		<downloadurl type="full" format="zip">https://github.com/jaydenrussell/plg_system_loginpopup/releases/download/v3.0.1/plg_system_loginpopup.zip</downloadurl>
+		<downloadurl type="full" format="zip">https://github.com/jaydenrussell/plg_system_loginpopup/releases/download/v3.0.4/plg_system_loginpopup_v3.0.4.zip</downloadurl>
 		<targetplatform version="3.[0-9]" />
 		<php_minimum>5.4</php_minimum>
 	</update>

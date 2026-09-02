@@ -47,7 +47,7 @@
 
 		// Keyboard: Escape closes the modal
 		document.addEventListener('keydown', function(e) {
-			if (e.key === 'Escape' || e.keyCode === 27) {
+			if (e.key === 'Escape') {
 				var popup = document.getElementById('lp-popup');
 				if (popup && popup.classList.contains('lp-open')) {
 					if (typeof ExtStore !== 'undefined' && ExtStore.LoginPopup) {

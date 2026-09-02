@@ -14,7 +14,7 @@ jimport('joomla.plugin.plugin');
  * System - Login Popup Plugin
  *
  * @package		Joomla.Plugin
- * @subpakage	ExtStore.LoginPopup
+ * @subpackage	ExtStore.LoginPopup
  */
 class plgSystemLoginPopup extends JPlugin {
 
@@ -25,7 +25,6 @@ class plgSystemLoginPopup extends JPlugin {
 	 * @param	array $config
 	 */
 	function __construct(&$subject, $config = array()) {
-		// call parent constructor
 		parent::__construct($subject, $config);
 	}
 
@@ -38,6 +37,7 @@ class plgSystemLoginPopup extends JPlugin {
 			JHtml::_('jquery.framework');
 
 			JHtml::_('script', 'plg_system_loginpopup/script.js', false, true);
+			JHtml::_('script', 'plg_system_loginpopup/init.js', false, true);
 			JHtml::_('stylesheet', 'plg_system_loginpopup/style.css', false, true);
 
 			$layout = $this->params->get('layout', 'default');
@@ -47,34 +47,19 @@ class plgSystemLoginPopup extends JPlugin {
 				JHtml::_('script', 'plg_system_loginpopup/modern.js', false, true);
 			}
 
-			$selector	= str_replace('\'', '"', $this->params->get('selector', 'a[href="#login"], a[href="#logout"]'));
-			$offsetTop	= (int) $this->params->get('offset_top', 50);
-			$modalPosition = $this->params->get('modal_position', 'center');
-			$modalTopOffset = (int) $this->params->get('modal_top_offset', 50);
-			$unblurHeader = (int) $this->params->get('unblur_header', 1);
-			$unblurSelector = $this->params->get('unblur_selector', '#astroid-header, #astroid-sticky-header, .astroid-header, .astroid-topbar, header, .navbar, .astroid-module-position.top-header-navbar');
+			$selector = $this->params->get('selector', 'a[href="#login"], a[href="#logout"]');
 
-			$script	= <<<SCRIPT
-jQuery(document).ready(function() {
-	ExtStore.LoginPopup.offset_top	= $offsetTop;
-	ExtStore.LoginPopup.modal_position = '$modalPosition';
-	ExtStore.LoginPopup.modal_top_offset = $modalTopOffset;
-	ExtStore.LoginPopup.unblur_header = $unblurHeader;
-	ExtStore.LoginPopup.unblur_selector = '$unblurSelector';
+			$config = array(
+				'selector'         => $selector,
+				'offset_top'       => (int) $this->params->get('offset_top', 50),
+				'modal_position'   => $this->params->get('modal_position', 'center'),
+				'modal_top_offset' => (int) $this->params->get('modal_top_offset', 50),
+				'unblur_header'    => (int) $this->params->get('unblur_header', 1),
+				'unblur_selector'  => $this->params->get('unblur_selector', '#astroid-header, #astroid-sticky-header, .astroid-header, #astroid-topbar, header, .navbar, .astroid-module-position.top-header-navbar'),
+			);
 
-	jQuery('$selector').click(function(event) {
-		ExtStore.LoginPopup.open();
-
-		event.stopPropagation();
-		event.preventDefault();
-	});
-
-	jQuery('#lp-overlay, .lp-close').click(function() {
-		ExtStore.LoginPopup.close();
-	});
-});
-SCRIPT;
-			JFactory::getDocument()->addScriptDeclaration($script);
+			$doc = JFactory::getDocument();
+			$doc->addScriptDeclaration('window.LoginPopupConfig = ' . json_encode($config) . ';');
 		}
 	}
 
@@ -82,27 +67,27 @@ SCRIPT;
 	 * onAfterRender hook.
 	 */
 	function onAfterRender() {
-		$app	= JFactory::getApplication();
+		$app = JFactory::getApplication();
 
 		if ($app->isSite()) {
 			$this->loadLanguage();
-			$user	= JFactory::getUser();
+			$user = JFactory::getUser();
 
 			$theme = $this->params->get('layout', 'default');
 
 			if ($user->id) {
-				$layout		= 'logout';
+				$layout = 'logout';
 			} else {
-				$layout		= 'login';
+				$layout = 'login';
 			}
 
 			if ($theme === 'modern') {
 				$layout .= '_modern';
 			}
 
-			$html	= JLayoutHelper::render($layout, $this->params, dirname(__FILE__) . '/layouts');
-			$body	= $app->getBody();
-			$body	= preg_replace('~</body[^>]*>~', $html . '$0', $body);
+			$html  = JLayoutHelper::render($layout, $this->params, dirname(__FILE__) . '/layouts');
+			$body  = $app->getBody();
+			$body  = preg_replace('~</body[^>]*>~', $html . '$0', $body);
 
 			$app->setBody($body);
 		}
