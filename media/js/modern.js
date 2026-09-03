@@ -117,7 +117,12 @@
 				var doUnblur = this.unblur_header === 1;
 				if (!selector) return;
 
-				var elements = document.querySelectorAll(selector);
+				var elements;
+				try {
+					elements = document.querySelectorAll(selector);
+				} catch (e) {
+					return;
+				}
 				elements.forEach(function(el) {
 					// Store original z-index
 					var originalZ = window.getComputedStyle(el).zIndex;
@@ -142,9 +147,14 @@
 
 				if (this.unblur_selector) {
 					var selector = this.unblur_selector;
-					var elements = document.querySelectorAll(selector);
-					elements.forEach(function(el) {
-						var originalZ = el.dataset.originalZIndex;
+				var elements;
+				try {
+					elements = document.querySelectorAll(selector);
+				} catch (e) {
+					return;
+				}
+				elements.forEach(function(el) {
+					var originalZ = el.dataset.originalZIndex;
 						if (originalZ !== undefined) {
 							el.style.zIndex = originalZ === '' ? '' : originalZ;
 						}

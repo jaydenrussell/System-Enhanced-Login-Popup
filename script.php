@@ -31,7 +31,7 @@ class plgSystemLoginPopupInstallerScript
 	 *
 	 * @var    string
 	 */
-	private $updateSiteLocation = 'https://cdn.jsdelivr.net/gh/jaydenrussell/System-Enhanced-Login-Popup@v3.0.8/updates.xml';
+	private $updateSiteLocation = 'https://raw.githubusercontent.com/jaydenrussell/System-Enhanced-Login-Popup/master/updates.xml';
 
 	/**
 	 * Update site type.

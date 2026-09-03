@@ -239,6 +239,11 @@ class PlgSystemLoginPopupHelper {
 			return $logo;
 		}
 
+		// Reject protocol-relative URLs (e.g. //evil.com/x).
+		if (strpos($logo, '//') === 0) {
+			return '';
+		}
+
 		if (!preg_match('~^(/|\./|\.\./|[a-z0-9_./-]+$)~i', $logo)) {
 			return '';
 		}
