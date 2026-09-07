@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<updat es>
+<updat  es>
 	<update>
-		<name>plg_system_loginpopup</ name>
-		<description>System - Enhanced Login  Popup</description>
-		<element>loginpopup</el ement>
+		<name>plg_system_loginpopup< / name>
+		<description>System - Enhanced Logi n  Popup</description>
+		<element>loginpopup< /el ement>
 		<type>plugin</type>
-		<folder>system </folder>
+		<folder>sy stem </folder>
 		<client>site</client>
-		<version> 3.0.9</version>
-		<infourl title="Enhanced Lo gin Popup">https://github.com/jaydenrussell/S ystem-Enhanced-Login-Popup</infourl>
-		<downl oadurl type="full" format="zip">https://githu b.com/jaydenrussell/System-Enhanced-Login-Pop up/releases/download/v3.0.10/plg_system_loginp opup_v3.0.9.zip</downloadurl>
-		<targetplatfo rm name="joomla" version="3.[0-9]" />
+		<ver sion> 3.0.9</version>
+		<infourl title="Enhan ced Lo gin Popup">https://github.com/jaydenru ssell/S ystem-Enhanced-Login-Popup</infourl>
+ 		<downl oadurl type="full" format="zip">http s://githu b.com/jaydenrussell/System-Enhanced -Login-Pop up/releases/download/v3.0.10/plg_s ystem_loginp opup_v3.0.9.zip</downloadurl>
+		 <targetplatfo rm name="joomla" version="3.[0- 9]" />
 		<php_ minimum>5.4</php_minimum>
-	</update>
-</update s> 
+	</u pdate>
+</update s>  
