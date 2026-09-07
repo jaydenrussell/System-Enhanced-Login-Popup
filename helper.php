@@ -50,8 +50,21 @@ class PlgSystemLoginPopupHelper {
 		$active     = $menu->getActive();
 		$currentId  = $active ? (int) $active->id : 0;
 
+		// Fallback: if getActive() is null, try Itemid from the current request
+		if (!$currentId) {
+			$currentId = $app->input->getInt('Itemid');
+		}
+
 		// 1. Check redirect_map for matching source_itemid
 		$redirectMap = $params->get('redirect_map', array());
+
+		// Normalize: Joomla subform may store as JSON string instead of array
+		if (is_string($redirectMap)) {
+			$decoded = json_decode($redirectMap);
+			if (is_array($decoded)) {
+				$redirectMap = $decoded;
+			}
+		}
 
 		if (!empty($redirectMap) && is_array($redirectMap)) {
 			foreach ($redirectMap as $rule) {
@@ -103,6 +116,7 @@ class PlgSystemLoginPopupHelper {
 		if ($router->getMode() == JROUTER_MODE_SEF) {
 			if (isset($vars['Itemid'])) {
 				$itemid = $vars['Itemid'];
+
 				$menu   = $app->getMenu();
 				$item   = $menu->getItem($itemid);
 				unset($vars['Itemid']);
@@ -161,6 +175,7 @@ class PlgSystemLoginPopupHelper {
 		return $url;
 	}
 
+
 	/**
 	 * Get list of available two factor methods
 	 *
@@ -195,6 +210,7 @@ class PlgSystemLoginPopupHelper {
 			'unblur_zindex'    => (int) $params->get('unblur_zindex', 2002),
 		);
 	}
+
 
 	/**
 	 * Encode an array as a safe base64 JSON payload for a data attribute.
