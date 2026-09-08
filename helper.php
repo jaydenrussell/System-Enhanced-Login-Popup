@@ -55,6 +55,9 @@ class PlgSystemLoginPopupHelper {
 			$currentId = $app->input->getInt('Itemid');
 		}
 
+		// DEBUG: Log currentId and redirect_map
+		$app->enqueueMessage('[DEBUG] currentId=' . $currentId . ', redirect_map=' . json_encode($params->get('redirect_map', array())), 'notice');
+
 		// 1. Check redirect_map for matching source_itemid
 		$redirectMap = $params->get('redirect_map', array());
 

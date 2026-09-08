@@ -14,7 +14,7 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>jaydenrussell@users.noreply.github.com</authorEmail>
 	<authorUrl>https://github.com/jaydenrussell</authorUrl>
-	<version>3.0.19</version>
+	<version>3.0.20</version>
 	<description>
 	<![CDATA[
 		Enhanced Login Popup — Modern layout with club branding, password toggle, customizable title, full-page blur, responsive design, and dynamic page-based redirect rules (subform-driven). Originally based on ExtStore Login Popup v1.0.1 for Joomla 3.x.
