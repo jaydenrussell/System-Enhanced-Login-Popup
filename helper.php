@@ -86,22 +86,37 @@ class PlgSystemLoginPopupHelper {
 
 		$redirectMap = $params->get('redirect_map', array());
 
-		// Normalize: Joomla subform may store as JSON string instead of array
+		// Joomla can persist an extension subform in several shapes depending
+		// on CMS version and how the params were saved: a list of objects, a
+		// list of associative arrays, a JSON string of either, or an object
+		// with numeric keys holding the rows. Normalize everything to a plain
+		// list of associative arrays before matching.
 		if (is_string($redirectMap)) {
-			$decoded = json_decode($redirectMap);
-			if (is_array($decoded)) {
-				$redirectMap = $decoded;
-			}
+			$redirectMap = json_decode($redirectMap, true);
 		}
 
-		if (!empty($redirectMap) && is_array($redirectMap)) {
-			foreach ($redirectMap as $rule) {
-				$sourceId = isset($rule->source_itemid) ? (int) $rule->source_itemid : 0;
-				$targetId = isset($rule->target_itemid) ? (int) $rule->target_itemid : 0;
+		if (is_object($redirectMap)) {
+			$redirectMap = get_object_vars($redirectMap);
+		}
 
-				if ($sourceId > 0 && $targetId > 0 && $sourceId === $currentId) {
-					return $targetId;
-				}
+		if (!is_array($redirectMap)) {
+			$redirectMap = array();
+		}
+
+		foreach ($redirectMap as $rule) {
+			if (is_object($rule)) {
+				$rule = get_object_vars($rule);
+			}
+
+			if (!is_array($rule)) {
+				continue;
+			}
+
+			$sourceId = isset($rule['source_itemid']) ? (int) $rule['source_itemid'] : 0;
+			$targetId = isset($rule['target_itemid']) ? (int) $rule['target_itemid'] : 0;
+
+			if ($sourceId > 0 && $targetId > 0 && $sourceId === $currentId) {
+				return $targetId;
 			}
 		}
 
