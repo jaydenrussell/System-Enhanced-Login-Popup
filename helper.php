@@ -45,12 +45,57 @@ class PlgSystemLoginPopupHelper {
 	/**
 	 * Whether the popup should post to Community Builder's login/logout handler.
 	 *
+	 * 'auto' (default) detects whether the Community Builder component is
+	 * installed and enabled, so the popup works on both plain Joomla sites and
+	 * CB sites without manual configuration.
+	 *
 	 * @param   JRegistry  $params  plugin parameters
 	 *
 	 * @return boolean
 	 */
 	public static function isComprofiler($params) {
-		return (string) $params->get('login_system', 'joomla') === 'comprofiler';
+		$loginSystem = (string) $params->get('login_system', 'auto');
+
+		if ($loginSystem === 'comprofiler') {
+			return true;
+		}
+
+		if ($loginSystem === 'joomla') {
+			return false;
+		}
+
+		return self::cbComponentEnabled();
+	}
+
+	/**
+	 * Detect whether the Community Builder component is installed and enabled.
+	 *
+	 * @return boolean
+	 */
+	private static function cbComponentEnabled() {
+		if (class_exists('JComponentHelper') && method_exists('JComponentHelper', 'isEnabled')) {
+			try {
+				return (bool) JComponentHelper::isEnabled('com_comprofiler');
+			} catch (Exception $e) {
+				// fall through to the database check
+			}
+		}
+
+		try {
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true)
+				->select('COUNT(*)')
+				->from($db->quoteName('#__extensions'))
+				->where($db->quoteName('type') . ' = ' . $db->quote('component'))
+				->where($db->quoteName('element') . ' = ' . $db->quote('com_comprofiler'))
+				->where($db->quoteName('enabled') . ' = 1');
+
+			$db->setQuery($query);
+
+			return (bool) $db->loadResult();
+		} catch (Exception $e) {
+			return false;
+		}
 	}
 
 	/**

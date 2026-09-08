@@ -14,7 +14,7 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>jaydenrussell@users.noreply.github.com</authorEmail>
 	<authorUrl>https://github.com/jaydenrussell</authorUrl>
-	<version>3.0.24</version>
+	<version>3.0.25</version>
 	<description>
 	<![CDATA[
 		Enhanced Login Popup — Modern layout with club branding, password toggle, customizable title, full-page blur, responsive design, and dynamic page-based redirect rules (subform-driven). Originally based on ExtStore Login Popup v1.0.1 for Joomla 3.x.
@@ -50,10 +50,11 @@
 				<field
 					name="login_system"
 					type="list"
-					default="joomla"
+					default="auto"
 					label="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGIN_SYSTEM_LABEL"
 					description="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGIN_SYSTEM_DESC"
 				>
+					<option value="auto">PLG_SYSTEM_LOGINPOPUP_LOGIN_SYSTEM_AUTO</option>
 					<option value="joomla">PLG_SYSTEM_LOGINPOPUP_LOGIN_SYSTEM_JOOMLA</option>
 					<option value="comprofiler">PLG_SYSTEM_LOGINPOPUP_LOGIN_SYSTEM_COMPROFILER</option>
 				</field>
