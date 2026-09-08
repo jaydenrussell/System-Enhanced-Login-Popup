@@ -195,7 +195,7 @@ class PlgSystemLoginPopupHelper {
 			$db->setQuery($query);
 
 			if ($db->loadResult()) {
-				$url = 'index.php?Itemid=' . $itemid;
+				$url = base64_encode('index.php?Itemid=' . $itemid);
 			}
 		}
 
