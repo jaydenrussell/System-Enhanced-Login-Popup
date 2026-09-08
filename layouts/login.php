@@ -20,7 +20,7 @@ $clientConfig		= PlgSystemLoginPopupHelper::encodeClientConfig(PlgSystemLoginPop
 	</div>
 	<button class="lp-close" type="button" title="Close (Esc)">×</button>
 
-	<form action="<?php echo JRoute::_('index.php?option=com_users&task=user.login', true); ?>" method="post" class="lp-form">
+	<form action="<?php echo JRoute::_('index.php', true, $displayData->get('usesecure')); ?>" method="post" class="lp-form">
 		<h3><?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_FORM_TITLE'); ?></h3>
 		<div class="lp-field-wrapper">
 			<label for="lp-username"><?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_USERNAME'); ?> *</label>
