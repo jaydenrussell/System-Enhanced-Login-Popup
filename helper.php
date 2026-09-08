@@ -28,6 +28,11 @@ class PlgSystemLoginPopupHelper {
 		$app    = JFactory::getApplication();
 		$router = $app::getRouter();
 
+		// Community Builder mode uses CB's own return format (B: + base64 absolute URL)
+		if (self::isComprofiler($params)) {
+			return self::getCbReturnURL($params, $type);
+		}
+
 		// Dynamic redirect only applies to login, not logout
 		if ($type === 'login' && (int) $params->get('redirect_enabled', 0) === 1) {
 			return self::getDynamicReturnURL($params);
@@ -35,6 +40,50 @@ class PlgSystemLoginPopupHelper {
 
 		// Original static behavior
 		return self::getStaticReturnURL($params, $type);
+	}
+
+	/**
+	 * Whether the popup should post to Community Builder's login/logout handler.
+	 *
+	 * @param   JRegistry  $params  plugin parameters
+	 *
+	 * @return boolean
+	 */
+	public static function isComprofiler($params) {
+		return (string) $params->get('login_system', 'joomla') === 'comprofiler';
+	}
+
+	/**
+	 * Build a Community Builder compatible return value.
+	 *
+	 * CB encodes its login/logout return as 'B:' followed by the base64
+	 * encoding of an absolute URL (e.g. B:aHR0cDovL2V4YW1wbGUuY29tL2NwLXByb2ZpbGU=).
+	 *
+	 * @param   JRegistry  $params  plugin parameters
+	 * @param   string     $type    return type ('login' or 'logout')
+	 *
+	 * @return string  CB-encoded return value
+	 */
+	private static function getCbReturnURL($params, $type) {
+		$targetId = 0;
+
+		if ($type === 'login' && (int) $params->get('redirect_enabled', 0) === 1) {
+			$targetId = (int) self::getDynamicTargetId($params);
+		}
+
+		if ($targetId <= 0) {
+			$targetId = (int) $params->get($type);
+		}
+
+		if ($targetId > 0) {
+			$sef = self::toSefUrl('index.php?Itemid=' . $targetId);
+		} else {
+			$sef = self::toSefUrl(self::getCurrentPageInternalUrl());
+		}
+
+		$abs = JUri::root() . ltrim($sef, '/');
+
+		return 'B:' . base64_encode($abs);
 	}
 
 	/**
@@ -56,6 +105,34 @@ class PlgSystemLoginPopupHelper {
 		}
 
 		// 1. Check redirect_map for matching source_itemid
+		$targetId = self::getDynamicTargetId($params);
+
+		if ($targetId > 0) {
+			return self::buildItemidUrl($targetId);
+		}
+
+		// 2. Fallback: return to current page
+		return self::getCurrentPageUrl();
+	}
+
+	/**
+	 * Find the matching redirect_map target Itemid for the current page.
+	 *
+	 * @param   JRegistry  $params  plugin parameters
+	 *
+	 * @return int  matched target Itemid, 0 when no rule matches
+	 */
+	private static function getDynamicTargetId($params) {
+		$app        = JFactory::getApplication();
+		$menu       = $app->getMenu();
+		$active     = $menu->getActive();
+		$currentId  = $active ? (int) $active->id : 0;
+
+		// Fallback: if getActive() is null, try Itemid from the current request
+		if (!$currentId) {
+			$currentId = $app->input->getInt('Itemid');
+		}
+
 		$redirectMap = $params->get('redirect_map', array());
 
 		// Normalize: Joomla subform may store as JSON string instead of array
@@ -72,13 +149,12 @@ class PlgSystemLoginPopupHelper {
 				$targetId = isset($rule->target_itemid) ? (int) $rule->target_itemid : 0;
 
 				if ($sourceId > 0 && $targetId > 0 && $sourceId === $currentId) {
-					return self::buildItemidUrl($targetId);
+					return $targetId;
 				}
 			}
 		}
 
-		// 2. Fallback: return to current page
-		return self::getCurrentPageUrl();
+		return 0;
 	}
 
 	/**
@@ -94,7 +170,7 @@ class PlgSystemLoginPopupHelper {
 			return self::getCurrentPageUrl();
 		}
 
-		$url = self::toSefUrl('index.php?Itemid=' . $itemid);
+		$url = 'index.php?Itemid=' . $itemid;
 
 		return base64_encode($url);
 	}
@@ -122,6 +198,15 @@ class PlgSystemLoginPopupHelper {
 	 * @return string  base64-encoded URL
 	 */
 	private static function getCurrentPageUrl() {
+		return base64_encode(self::getCurrentPageInternalUrl());
+	}
+
+	/**
+	 * Get the current page as a raw internal URL (fallback).
+	 *
+	 * @return string  internal URL (e.g. index.php?Itemid=101)
+	 */
+	private static function getCurrentPageInternalUrl() {
 		$app    = JFactory::getApplication();
 		$router = $app::getRouter();
 		$url    = null;
@@ -150,9 +235,7 @@ class PlgSystemLoginPopupHelper {
 			$url = 'index.php?' . JUri::buildQuery($vars);
 		}
 
-		$url = self::toSefUrl($url);
-
-		return base64_encode($url);
+		return $url;
 	}
 
 	/**
@@ -178,7 +261,7 @@ class PlgSystemLoginPopupHelper {
 			$db->setQuery($query);
 
 			if ($db->loadResult()) {
-				$url = self::toSefUrl('index.php?Itemid=' . $itemid);
+				$url = 'index.php?Itemid=' . $itemid;
 			}
 		}
 

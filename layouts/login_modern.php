@@ -10,6 +10,10 @@ require_once dirname(dirname(__FILE__)) . '/helper.php';
 $return				= PlgSystemLoginPopupHelper::getReturnURL($displayData, 'login');
 $twofactormethods	= PlgSystemLoginPopupHelper::getTwoFactorMethods();
 $clientConfig		= PlgSystemLoginPopupHelper::encodeClientConfig(PlgSystemLoginPopupHelper::getClientConfig($displayData));
+$isCb				= PlgSystemLoginPopupHelper::isComprofiler($displayData);
+$loginAction		= $isCb
+	? JRoute::_('index.php?option=com_comprofiler&view=login', true)
+	: JRoute::_('index.php?option=com_users&task=user.login', true, $displayData->get('usesecure'));
 
 $logo = PlgSystemLoginPopupHelper::getSafeLogo($displayData->get('logo', ''));
 if ($logo === '') {
@@ -42,7 +46,7 @@ $modalPosition = $displayData->get('modal_position', 'center');
 		<img src="<?php echo htmlspecialchars(JRoute::_($logo), ENT_QUOTES, 'UTF-8'); ?>" alt="Club Logo" class="lp-logo-size-<?php echo htmlspecialchars($logoSize, ENT_QUOTES, 'UTF-8'); ?>" />
 	</div>
 
-	<form action="<?php echo JRoute::_('index.php?option=com_users&task=user.login', true, $displayData->get('usesecure')); ?>" method="post" class="lp-form" autocomplete="on">
+	<form action="<?php echo $loginAction; ?>" method="post" class="lp-form" autocomplete="on">
 		<?php if ($customTitleEnabled) : ?>
 			<h3><?php echo htmlspecialchars($customTitleText, ENT_QUOTES, 'UTF-8'); ?></h3>
 		<?php endif; ?>
@@ -54,7 +58,7 @@ $modalPosition = $displayData->get('modal_position', 'center');
 
 		<div class="lp-field-wrapper lp-password-wrap">
 			<label for="lp-password"><?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_PASSWORD'); ?></label>
-			<input type="password" id="lp-password" class="lp-input-text lp-input-password" name="password" placeholder="<?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_PASSWORD'); ?>" autocomplete="current-password" required="true" />
+			<input type="password" id="lp-password" class="lp-input-text lp-input-password" name="<?php echo $isCb ? 'passwd' : 'password'; ?>" placeholder="<?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_PASSWORD'); ?>" autocomplete="current-password" required="true" />
 			<button type="button" class="lp-pass-toggle" id="lp-pass-toggle" aria-label="<?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_MODERN_SHOW_PASS'); ?>" title="<?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_MODERN_SHOW_PASS'); ?>">
 				<svg class="lp-eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
 				<svg class="lp-eye-closed" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
@@ -112,8 +116,16 @@ $modalPosition = $displayData->get('modal_position', 'center');
 			<a href="<?php echo JRoute::_('index.php?option=com_users&view=registration&Itemid=' . UsersHelperRoute::getRegistrationRoute()); ?>"><?php echo htmlspecialchars($signupLinkText, ENT_QUOTES, 'UTF-8'); ?></a>
 		</div>
 
-		<input type="hidden" name="option" value="com_users" />
-		<input type="hidden" name="task" value="user.login" />
+		<?php if ($isCb) : ?>
+			<input type="hidden" name="option" value="com_comprofiler" />
+			<input type="hidden" name="view" value="login" />
+			<input type="hidden" name="op2" value="login" />
+			<input type="hidden" name="message" value="0" />
+			<input type="hidden" name="loginfrom" value="loginmodule" />
+		<?php else : ?>
+			<input type="hidden" name="option" value="com_users" />
+			<input type="hidden" name="task" value="user.login" />
+		<?php endif; ?>
 		<input type="hidden" name="return" value="<?php echo $return; ?>" />
 		<?php echo JHtml::_('form.token'); ?>
 	</form>
