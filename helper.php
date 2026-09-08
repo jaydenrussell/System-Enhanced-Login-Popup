@@ -94,9 +94,26 @@ class PlgSystemLoginPopupHelper {
 			return self::getCurrentPageUrl();
 		}
 
-		$url = 'index.php?Itemid=' . $itemid;
+		$url = self::toSefUrl('index.php?Itemid=' . $itemid);
 
 		return base64_encode($url);
+	}
+
+	/**
+	 * Convert an internal URL to its SEF/alias route when possible.
+	 *
+	 * @param   string  $internal  internal URL (e.g. index.php?Itemid=113)
+	 *
+	 * @return string  routed URL (e.g. /cb-profile)
+	 */
+	private static function toSefUrl($internal) {
+		$route = JRoute::_($internal, false);
+
+		if ($route) {
+			return $route;
+		}
+
+		return $internal;
 	}
 
 	/**
@@ -133,6 +150,8 @@ class PlgSystemLoginPopupHelper {
 			$url = 'index.php?' . JUri::buildQuery($vars);
 		}
 
+		$url = self::toSefUrl($url);
+
 		return base64_encode($url);
 	}
 
@@ -146,11 +165,7 @@ class PlgSystemLoginPopupHelper {
 	 */
 	private static function getStaticReturnURL($params, $type) {
 		$app    = JFactory::getApplication();
-		$router = $app::getRouter();
 		$url    = null;
-
-		$logFile = JFactory::getConfig()->get('log_path') . '/loginpopup_debug.log';
-		file_put_contents($logFile, date('c') . " STATIC type=$type param=" . var_export($params->get($type), true) . PHP_EOL, FILE_APPEND);
 
 		if ($itemid = (int) $params->get($type)) {
 			$db    = JFactory::getDbo();
@@ -162,22 +177,12 @@ class PlgSystemLoginPopupHelper {
 
 			$db->setQuery($query);
 
-			if ($link = $db->loadResult()) {
-				if ($router->getMode() == JROUTER_MODE_SEF) {
-					$url = 'index.php?Itemid=' . $itemid;
-				} else {
-					$url = $link . '&Itemid=' . $itemid;
-				}
-				file_put_contents($logFile, date('c') . " STATIC found link=$link itemid=$itemid url=$url" . PHP_EOL, FILE_APPEND);
-			} else {
-				file_put_contents($logFile, date('c') . " STATIC no link found for itemid=$itemid" . PHP_EOL, FILE_APPEND);
+			if ($db->loadResult()) {
+				$url = self::toSefUrl('index.php?Itemid=' . $itemid);
 			}
-		} else {
-			file_put_contents($logFile, date('c') . " STATIC no itemid for type=$type" . PHP_EOL, FILE_APPEND);
 		}
 
 		if (!$url) {
-			file_put_contents($logFile, date('c') . " STATIC falling back to current page" . PHP_EOL, FILE_APPEND);
 			$url = self::getCurrentPageUrl();
 		}
 
