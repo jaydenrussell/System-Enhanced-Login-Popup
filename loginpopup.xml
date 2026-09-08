@@ -1,286 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- 
 /**
- * @copyright	Copyright (c) 2014 Skylin e Technology Ltd (http://extstore.com). All r ights reserved.
- * @copyright	Copyright (c)  2026 Jayden Russell. All rights reserved.
- *  @license		GNU General Public License version  2 or later; see LICENSE.txt
+ * @copyright	Copyright (c) 2014 Skyline Technology Ltd (http://extstore.com). All rights reserved.
+ * @copyright	Copyright (c) 2026 Jayden Russell. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 -->
-<exte nsion type="plugin" version="3.0" group="syst em" method="upgrade">
-	<name>plg_system_logi npopup</name>
-	<author>Jayden Russell</autho r>
-	<creationDate>October 2014</creationDate >
-	<copyright>Copyright (c) 2014 ExtStore. C opyright (c) 2026 Jayden Russell. All rights  reserved.</copyright>
-	<license>GNU General  Public License version 2 or later; see LICENS E.txt</license>
-	<authorEmail>jaydenrussell@ users.noreply.github.com</authorEmail>
-	<aut horUrl>https://github.com/jaydenrussell</auth orUrl>
-	<version>3.0.13</version>
-	<descript ion>
+<extension type="plugin" version="3.0" group="system" method="upgrade">
+	<name>plg_system_loginpopup</name>
+	<author>Jayden Russell</author>
+	<creationDate>October 2014</creationDate>
+	<copyright>Copyright (c) 2014 ExtStore. Copyright (c) 2026 Jayden Russell. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>jaydenrussell@users.noreply.github.com</authorEmail>
+	<authorUrl>https://github.com/jaydenrussell</authorUrl>
+	<version>3.0.9</version>
+	<description>
 	<![CDATA[
-		Enhanced Login Popup —  Modern layout with club branding, password to ggle, customizable title, full-page blur, res ponsive design, and dynamic page-based redire ct rules (subform-driven). Originally based o n ExtStore Login Popup v1.0.1 for Joomla 3.x. 
+		Enhanced Login Popup — Modern layout with club branding, password toggle, customizable title, full-page blur, responsive design, and dynamic page-based redirect rules (subform-driven). Originally based on ExtStore Login Popup v1.0.1 for Joomla 3.x.
 	]]>
 	</description>
 
-	<updateserver>htt ps://raw.githubusercontent.com/jaydenrussell/ System-Enhanced-Login-Popup/master/updates.xm l</updateserver>
+	<updateserver>https://raw.githubusercontent.com/jaydenrussell/System-Enhanced-Login-Popup/master/updates.xml</updateserver>
 
-	<scriptfile>script.php</ scriptfile>
+	<scriptfile>script.php</scriptfile>
 
 	<files>
-		<folder>layouts</f older>
-		<filename plugin="loginpopup">login popup.php</filename>
-		<filename>helper.php< /filename>
-		<filename>index.html</filename> 
+		<folder>layouts</folder>
+		<filename plugin="loginpopup">loginpopup.php</filename>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>
 	</files>
 
-	<media folder="media" destina tion="plg_system_loginpopup">
-		<folder>css< /folder>
+	<media folder="media" destination="plg_system_loginpopup">
+		<folder>css</folder>
 		<folder>images</folder>
-		<folde r>js</folder>
-		<filename>index.html</filena me>
+		<folder>js</folder>
+		<filename>index.html</filename>
 	</media>
 
 	<languages>
-		<language t ag="en-GB">en-GB.plg_system_loginpopup.ini</l anguage>
-		<language tag="en-GB">en-GB.plg_s ystem_loginpopup.sys.ini</language>
-	</langu ages>
+		<language tag="en-GB">en-GB.plg_system_loginpopup.ini</language>
+		<language tag="en-GB">en-GB.plg_system_loginpopup.sys.ini</language>
+	</languages>
 
 	<config>
 		<fields name="params">
- 
 			<fieldset name="basic">
 				<field
-				 	name="layout"
+					name="layout"
 					type="list"
-					defaul t="default"
-					label="PLG_SYSTEM_LOGINPOPU P_FIELD_LAYOUT_LABEL"
-					description="PLG_ SYSTEM_LOGINPOPUP_FIELD_LAYOUT_DESC"
+					default="default"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_LAYOUT_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_LAYOUT_DESC"
 				>
- 					<option value="default">PLG_SYSTEM_LOGIN POPUP_LAYOUT_DEFAULT</option>
-					<option v alue="modern">PLG_SYSTEM_LOGINPOPUP_LAYOUT_MO DERN</option>
+					<option value="default">PLG_SYSTEM_LOGINPOPUP_LAYOUT_DEFAULT</option>
+					<option value="modern">PLG_SYSTEM_LOGINPOPUP_LAYOUT_MODERN</option>
 				</field>
 
 				<field
-		 			name="logo"
+					name="logo"
 					type="media"
-					label ="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGO_LABEL"
-		 			description="PLG_SYSTEM_LOGINPOPUP_FIELD_L OGO_DESC"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGO_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGO_DESC"
 					default=""
 				/>
 
-				<fi eld
+				<field
 					name="logo_size"
 					type="list"
- 
 					default="medium"
-					label="PLG_SYSTE M_LOGINPOPUP_FIELD_LOGO_SIZE_LABEL"
-					des cription="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGO_SI ZE_DESC"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGO_SIZE_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGO_SIZE_DESC"
 				>
-					<option value="small">P LG_SYSTEM_LOGINPOPUP_LOGO_SMALL</option>
-			 		<option value="medium">PLG_SYSTEM_LOGINPOPU P_LOGO_MEDIUM</option>
-					<option value="l arge">PLG_SYSTEM_LOGINPOPUP_LOGO_LARGE</optio n>
+					<option value="small">PLG_SYSTEM_LOGINPOPUP_LOGO_SMALL</option>
+					<option value="medium">PLG_SYSTEM_LOGINPOPUP_LOGO_MEDIUM</option>
+					<option value="large">PLG_SYSTEM_LOGINPOPUP_LOGO_LARGE</option>
 				</field>
 
 				<field
-					name="mo dal_position"
+					name="modal_position"
 					type="list"
-					default ="center"
-					label="PLG_SYSTEM_LOGINPOPUP_ FIELD_MODAL_POSITION_LABEL"
-					description ="PLG_SYSTEM_LOGINPOPUP_FIELD_MODAL_POSITION_ DESC"
+					default="center"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_MODAL_POSITION_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_MODAL_POSITION_DESC"
 				>
-					<option value="top">PLG_SY STEM_LOGINPOPUP_POSITION_TOP</option>
-					< option value="center">PLG_SYSTEM_LOGINPOPUP_P OSITION_CENTER</option>
-					<option value=" bottom">PLG_SYSTEM_LOGINPOPUP_POSITION_BOTTOM </option>
-					<option value="custom">PLG_SY STEM_LOGINPOPUP_POSITION_CUSTOM</option>
-			 	</field>
+					<option value="top">PLG_SYSTEM_LOGINPOPUP_POSITION_TOP</option>
+					<option value="center">PLG_SYSTEM_LOGINPOPUP_POSITION_CENTER</option>
+					<option value="bottom">PLG_SYSTEM_LOGINPOPUP_POSITION_BOTTOM</option>
+					<option value="custom">PLG_SYSTEM_LOGINPOPUP_POSITION_CUSTOM</option>
+				</field>
 
 				<field
-					name="modal_top _offset"
+					name="modal_top_offset"
 					type="text"
-					default="50" 
-					label="PLG_SYSTEM_LOGINPOPUP_FIELD_MOD AL_TOP_OFFSET_LABEL"
-					description="PLG_S YSTEM_LOGINPOPUP_FIELD_MODAL_TOP_OFFSET_DESC" 
+					default="50"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_MODAL_TOP_OFFSET_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_MODAL_TOP_OFFSET_DESC"
 				/>
 
 				<field
-					name="unblur_hea der"
+					name="unblur_header"
 					type="radio"
-					class="btn-grou p btn-group-yesno"
+					class="btn-group btn-group-yesno"
 					default="1"
-					la bel="PLG_SYSTEM_LOGINPOPUP_FIELD_UNBLUR_HEADE R_LABEL"
-					description="PLG_SYSTEM_LOGINP OPUP_FIELD_UNBLUR_HEADER_DESC"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_UNBLUR_HEADER_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_UNBLUR_HEADER_DESC"
 				>
-					< option value="1">JYES</option>
-					<option  value="0">JNO</option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
 				</field>
 
-			<f ield
+			<field
 				name="unblur_selector"
-				type="t ext"
-				default="#astroid-header, #astroid- sticky-header, .astroid-header, .astroid-topb ar, header, .navbar, .astroid-module-position .top-header-navbar"
-				label="PLG_SYSTEM_LO GINPOPUP_FIELD_UNBLUR_SELECTOR_LABEL"
-				de scription="PLG_SYSTEM_LOGINPOPUP_FIELD_UNBLUR _SELECTOR_DESC"
+				type="text"
+				default="#astroid-header, #astroid-sticky-header, .astroid-header, .astroid-topbar, header, .navbar, .astroid-module-position.top-header-navbar"
+				label="PLG_SYSTEM_LOGINPOPUP_FIELD_UNBLUR_SELECTOR_LABEL"
+				description="PLG_SYSTEM_LOGINPOPUP_FIELD_UNBLUR_SELECTOR_DESC"
 			/>
 
 			<field
-				name ="unblur_zindex"
+				name="unblur_zindex"
 				type="text"
-				defaul t="2002"
-				label="PLG_SYSTEM_LOGINPOPUP_FI ELD_UNBLUR_ZINDEX_LABEL"
-				description="PL G_SYSTEM_LOGINPOPUP_FIELD_UNBLUR_ZINDEX_DESC" 
+				default="2002"
+				label="PLG_SYSTEM_LOGINPOPUP_FIELD_UNBLUR_ZINDEX_LABEL"
+				description="PLG_SYSTEM_LOGINPOPUP_FIELD_UNBLUR_ZINDEX_DESC"
 			/>
 
-			<!-- Modern Layout Customizatio n -->
+			<!-- Modern Layout Customization -->
 				<field
-					name="custom_title_ena bled"
+					name="custom_title_enabled"
 					type="radio"
-					class="btn-gro up btn-group-yesno"
+					class="btn-group btn-group-yesno"
 					default="1"
-					l abel="PLG_SYSTEM_LOGINPOPUP_FIELD_CUSTOM_TITL E_ENABLED_LABEL"
-					description="PLG_SYSTE M_LOGINPOPUP_FIELD_CUSTOM_TITLE_ENABLED_DESC" 
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_CUSTOM_TITLE_ENABLED_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_CUSTOM_TITLE_ENABLED_DESC"
 				>
-					<option value="1">JYES</option> 
+					<option value="1">JYES</option>
 					<option value="0">JNO</option>
-				</ field>
+				</field>
 
 				<field
-					name="custom_title _text"
+					name="custom_title_text"
 					type="textarea"
-					label="PLG _SYSTEM_LOGINPOPUP_FIELD_CUSTOM_TITLE_TEXT_LA BEL"
-					description="PLG_SYSTEM_LOGINPOPUP _FIELD_CUSTOM_TITLE_TEXT_DESC"
-					default= "Welcome Back"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_CUSTOM_TITLE_TEXT_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_CUSTOM_TITLE_TEXT_DESC"
+					default="Welcome Back"
 					filter="safehtml"
-					 rows="3"
+					rows="3"
 					cols="40"
 				/>
 
-				<fiel d
+				<field
 					name="remember_display"
-					type="l ist"
+					type="list"
 					default="show_checked"
-					label ="PLG_SYSTEM_LOGINPOPUP_FIELD_REMEMBER_DISPLA Y_LABEL"
-					description="PLG_SYSTEM_LOGINP OPUP_FIELD_REMEMBER_DISPLAY_DESC"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_REMEMBER_DISPLAY_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_REMEMBER_DISPLAY_DESC"
 				>
-			 		<option value="show_checked">PLG_SYSTEM_LOG INPOPUP_REMEMBER_SHOW_CHECKED</option>
-					 <option value="show_unchecked">PLG_SYSTEM_LOG INPOPUP_REMEMBER_SHOW_UNCHECKED</option>
-			 		<option value="hide_checked">PLG_SYSTEM_LOG INPOPUP_REMEMBER_HIDE_CHECKED</option>
-					 <option value="hide_unchecked">PLG_SYSTEM_LOG INPOPUP_REMEMBER_HIDE_UNCHECKED</option>
-			 	</field>
+					<option value="show_checked">PLG_SYSTEM_LOGINPOPUP_REMEMBER_SHOW_CHECKED</option>
+					<option value="show_unchecked">PLG_SYSTEM_LOGINPOPUP_REMEMBER_SHOW_UNCHECKED</option>
+					<option value="hide_checked">PLG_SYSTEM_LOGINPOPUP_REMEMBER_HIDE_CHECKED</option>
+					<option value="hide_unchecked">PLG_SYSTEM_LOGINPOPUP_REMEMBER_HIDE_UNCHECKED</option>
+				</field>
 
 				<field
-					name="signup_te xt"
+					name="signup_text"
 					type="text"
-					label="PLG_SYSTEM _LOGINPOPUP_FIELD_SIGNUP_TEXT_LABEL"
-					de scription="PLG_SYSTEM_LOGINPOPUP_FIELD_SIGNUP _TEXT_DESC"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_SIGNUP_TEXT_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_SIGNUP_TEXT_DESC"
 					default="New to SCC?"
-				 />
+				/>
 
 				<field
-					name="signup_link_text "
+					name="signup_link_text"
 					type="text"
-					label="PLG_SYSTEM_L OGINPOPUP_FIELD_SIGNUP_LINK_TEXT_LABEL"
-				 	description="PLG_SYSTEM_LOGINPOPUP_FIELD_SIG NUP_LINK_TEXT_DESC"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_SIGNUP_LINK_TEXT_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_SIGNUP_LINK_TEXT_DESC"
 					default="Sign up"
- 				/>
+				/>
 
 				<field
 					name="selector"
-	 				type="text"
-					label="PLG_SYSTEM_LOGIN POPUP_FIELD_SELECTOR_LABEL"
-					description ="PLG_SYSTEM_LOGINPOPUP_FIELD_SELECTOR_DESC"
- 
-					default="a[href=#login], a[href=#logout ]"
+					type="text"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_SELECTOR_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_SELECTOR_DESC"
+					default="a[href=#login], a[href=#logout]"
 				/>
 
 				<field
-					name="offset_t op"
+					name="offset_top"
 					type="text"
-					label="PLG_SYSTEM _LOGINPOPUP_FIELD_OFFSET_TOP_LABEL"
-					des cription="PLG_SYSTEM_LOGINPOPUP_FIELD_OFFSET_ TOP_DESC"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_OFFSET_TOP_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_OFFSET_TOP_DESC"
 					default="50"
 				/>
 
-				< field
+				<field
 					name="login"
-					type="menuitem "
+					type="menuitem"
 					disable="separator"
-					label="PLG_ SYSTEM_LOGINPOPUP_FIELD_LOGIN_REDIRECTURL_LAB EL"
-					description="PLG_SYSTEM_LOGINPOPUP_ FIELD_LOGIN_REDIRECTURL_DESC"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGIN_REDIRECTURL_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGIN_REDIRECTURL_DESC"
 				>
-					<o ption value="">JDEFAULT</option>
-				</field >
+					<option value="">JDEFAULT</option>
+				</field>
 
 				<field
 					name="logout"
-					typ e="menuitem"
+					type="menuitem"
 					disable="separator"
-					 label="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGOUT_RED IRECTURL_LABEL"
-					description="PLG_SYSTEM _LOGINPOPUP_FIELD_LOGOUT_REDIRECTURL_DESC"
-	 			>
-					<option value="">JDEFAULT</option> 
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGOUT_REDIRECTURL_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGOUT_REDIRECTURL_DESC"
+				>
+					<option value="">JDEFAULT</option>
 				</field>
 
 				<field
-					name="gree ting"
+					name="greeting"
 					type="radio"
-					class="btn-gro up btn-group-yesno"
+					class="btn-group btn-group-yesno"
 					default="1"
-					l abel="PLG_SYSTEM_LOGINPOPUP_FIELD_GREETING_LA BEL"
-					description="PLG_SYSTEM_LOGINPOPUP _FIELD_GREETING_DESC"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_GREETING_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_GREETING_DESC"
 				>
-					<option va lue="1">JYES</option>
-					<option value="0" >JNO</option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
 				</field>
 
 				<field
-		 			name="name"
+					name="name"
 					type="list"
-					defaul t="0"
-					label="PLG_SYSTEM_LOGINPOPUP_FIEL D_NAME_LABEL"
-					description="PLG_SYSTEM_L OGINPOPUP_FIELD_NAME_DESC"
+					default="0"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_NAME_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_NAME_DESC"
 				>
-					<opti on value="0">PLG_SYSTEM_LOGINPOPUP_VALUE_NAME </option>
-					<option value="1">PLG_SYSTEM_ LOGINPOPUP_VALUE_USERNAME</option>
-				</fie ld>
+					<option value="0">PLG_SYSTEM_LOGINPOPUP_VALUE_NAME</option>
+					<option value="1">PLG_SYSTEM_LOGINPOPUP_VALUE_USERNAME</option>
+				</field>
 
 				<field
 					name="usesecure"
-			 		type="radio"
-					class="btn-group btn-gro up-yesno"
+					type="radio"
+					class="btn-group btn-group-yesno"
 					default="0"
-					label="PLG_ SYSTEM_LOGINPOPUP_FIELD_USESECURE_LABEL"
-			 		description="PLG_SYSTEM_LOGINPOPUP_FIELD_US ESECURE_DESC"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_USESECURE_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_USESECURE_DESC"
 				>
-					<option value="1"> JYES</option>
-					<option value="0">JNO</op tion>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
 				</field>
 			</fieldset>
 
-			<fi eldset name="redirect" label="PLG_SYSTEM_LOGI NPOPUP_FIELDSET_REDIRECT_LABEL">
+			<fieldset name="redirect" label="PLG_SYSTEM_LOGINPOPUP_FIELDSET_REDIRECT_LABEL">
 				<field
- 
 					name="redirect_enabled"
-					type="rad io"
+					type="radio"
 					class="btn-group btn-group-yesno"
- 					default="0"
-					label="PLG_SYSTEM_LOGI NPOPUP_FIELD_REDIRECT_ENABLED_LABEL"
-					de scription="PLG_SYSTEM_LOGINPOPUP_FIELD_REDIRE CT_ENABLED_DESC"
+					default="0"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_REDIRECT_ENABLED_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_REDIRECT_ENABLED_DESC"
 				>
-					<option value=" 1">JYES</option>
-					<option value="0">JNO< /option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
 				</field>
 
 				<field
-					na me="redirect_map"
+					name="redirect_map"
 					type="subform"
-					 label="PLG_SYSTEM_LOGINPOPUP_FIELD_REDIRECT_M AP_LABEL"
-					description="PLG_SYSTEM_LOGIN POPUP_FIELD_REDIRECT_MAP_DESC"
-					multiple ="true"
+					label="PLG_SYSTEM_LOGINPOPUP_FIELD_REDIRECT_MAP_LABEL"
+					description="PLG_SYSTEM_LOGINPOPUP_FIELD_REDIRECT_MAP_DESC"
+					multiple="true"
 					min="0"
 					max="50"
-					fo rmsource="plugins/system/loginpopup/layouts/f ields/redirect_map.xml"
+					formsource="plugins/system/loginpopup/layouts/fields/redirect_map.xml"
 				/>
-			</fieldse t>
+			</fieldset>
 		</fields>
 	</config>
-</extension> 
+</extension>
