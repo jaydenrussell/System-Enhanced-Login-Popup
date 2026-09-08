@@ -152,30 +152,39 @@ class PlgSystemLoginPopupHelper {
 		$router = $app::getRouter();
 		$url    = null;
 
-		if ($itemid = (int) $params->get($type)) {
-			$db    = JFactory::getDbo();
-			$query = $db->getQuery(true)
-				->select($db->quoteName('link'))
-				->from($db->quoteName('#__menu'))
-				->where($db->quoteName('published') . '=1')
-				->where($db->quoteName('id') . '=' . $db->quote($itemid));
+		\$loginItemid = \$params->get(\$type);
+		\$app->enqueueMessage('[DEBUG] getStaticReturnURL: type=' . \$type . ', loginItemid=' . json_encode(\$loginItemid), 'notice');
 
-			$db->setQuery($query);
+		if (\$itemid = (int) \$params->get(\$type)) {
+			\$db    = JFactory::getDbo();
+			\$query = \$db->getQuery(true)
+				->select(\$db->quoteName('link'))
+				->from(\$db->quoteName('#__menu'))
+				->where(\$db->quoteName('published') . '=1')
+				->where(\$db->quoteName('id') . '=' . \$db->quote(\$itemid));
 
-			if ($link = $db->loadResult()) {
-				if ($router->getMode() == JROUTER_MODE_SEF) {
-					$url = 'index.php?Itemid=' . $itemid;
+			\$db->setQuery(\$query);
+
+			if (\$link = \$db->loadResult()) {
+				if (\$router->getMode() == JROUTER_MODE_SEF) {
+					\$url = 'index.php?Itemid=' . \$itemid;
 				} else {
-					$url = $link . '&Itemid=' . $itemid;
+					\$url = \$link . '&Itemid=' . \$itemid;
 				}
+				\$app->enqueueMessage('[DEBUG] getStaticReturnURL: found link=' . \$link . ', itemid=' . \$itemid . ', url=' . \$url, 'notice');
+			} else {
+				\$app->enqueueMessage('[DEBUG] getStaticReturnURL: no link found for itemid=' . \$itemid, 'notice');
 			}
+		} else {
+			\$app->enqueueMessage('[DEBUG] getStaticReturnURL: no itemid found for type=' . \$type, 'notice');
 		}
 
-		if (!$url) {
-			$url = self::getCurrentPageUrl();
+		if (!\$url) {
+			\$app->enqueueMessage('[DEBUG] getStaticReturnURL: falling back to current page', 'notice');
+			\$url = self::getCurrentPageUrl();
 		}
 
-		return $url;
+		return \$url;
 	}
 
 
