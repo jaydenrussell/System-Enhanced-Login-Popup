@@ -10,10 +10,6 @@ require_once dirname(dirname(__FILE__)) . '/helper.php';
 $return			= PlgSystemLoginPopupHelper::getReturnURL($displayData, 'logout');
 $user			= JFactory::getUser();
 $clientConfig	= PlgSystemLoginPopupHelper::encodeClientConfig(PlgSystemLoginPopupHelper::getClientConfig($displayData));
-$isCb			= PlgSystemLoginPopupHelper::isComprofiler($displayData);
-$logoutAction	= $isCb
-	? JRoute::_('index.php?option=com_comprofiler&view=logout', true)
-	: JRoute::_('index.php?option=com_users&task=user.logout', true, $displayData->get('usesecure'));
 
 $logo = PlgSystemLoginPopupHelper::getSafeLogo($displayData->get('logo', ''));
 if ($logo === '') {
@@ -29,7 +25,7 @@ if ($logo === '') {
 		<img src="<?php echo htmlspecialchars(JRoute::_($logo), ENT_QUOTES, 'UTF-8'); ?>" alt="Club Logo" />
 	</div>
 
-	<form action="<?php echo $logoutAction; ?>" method="post" class="lp-form">
+	<form action="<?php echo JRoute::_('index.php', true, $displayData->get('usesecure')); ?>" method="post" class="lp-form">
 		<?php if ($displayData->get('greeting')) : ?>
 			<div class="lp-modern-greeting">
 				<?php echo JText::sprintf('PLG_SYSTEM_LOGINPOPUP_HINAME', htmlspecialchars($displayData->get('name') == 0 ? $user->get('name') : $user->get('username'))); ?>
@@ -40,15 +36,8 @@ if ($logo === '') {
 			<button type="submit" class="lp-button"><?php echo JText::_('JLOGOUT'); ?></button>
 		</div>
 
-		<?php if ($isCb) : ?>
-			<input type="hidden" name="option" value="com_comprofiler" />
-			<input type="hidden" name="view" value="logout" />
-			<input type="hidden" name="op2" value="logout" />
-			<input type="hidden" name="message" value="0" />
-		<?php else : ?>
-			<input type="hidden" name="option" value="com_users" />
-			<input type="hidden" name="task" value="user.logout" />
-		<?php endif; ?>
+		<input type="hidden" name="option" value="com_users" />
+		<input type="hidden" name="task" value="user.logout" />
 		<input type="hidden" name="return" value="<?php echo $return; ?>" />
 		<?php echo JHtml::_('form.token'); ?>
 	</form>

@@ -10,10 +10,6 @@ require_once dirname(dirname(__FILE__)) . '/helper.php';
 $return				= PlgSystemLoginPopupHelper::getReturnURL($displayData, 'login');
 $twofactormethods	= PlgSystemLoginPopupHelper::getTwoFactorMethods();
 $clientConfig		= PlgSystemLoginPopupHelper::encodeClientConfig(PlgSystemLoginPopupHelper::getClientConfig($displayData));
-$isCb				= PlgSystemLoginPopupHelper::isComprofiler($displayData);
-$loginAction		= $isCb
-	? JRoute::_('index.php?option=com_comprofiler&view=login', true)
-	: JRoute::_('index.php?option=com_users&task=user.login', true, $displayData->get('usesecure'));
 ?>
 
 <div id="lp-overlay"></div>
@@ -24,7 +20,7 @@ $loginAction		= $isCb
 	</div>
 	<button class="lp-close" type="button" title="Close (Esc)">×</button>
 
-	<form action="<?php echo $loginAction; ?>" method="post" class="lp-form">
+	<form action="<?php echo JRoute::_('index.php', true, $displayData->get('usesecure')); ?>" method="post" class="lp-form">
 		<h3><?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_FORM_TITLE'); ?></h3>
 		<div class="lp-field-wrapper">
 			<label for="lp-username"><?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_USERNAME'); ?> *</label>
@@ -32,7 +28,7 @@ $loginAction		= $isCb
 		</div>
 		<div class="lp-field-wrapper">
 			<label for="lp-password"><?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_PASSWORD'); ?> *</label>
-			<input type="password" id="lp-password" class="lp-input-text lp-input-password" name="<?php echo $isCb ? 'passwd' : 'password'; ?>" placeholder="<?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_PASSWORD'); ?>" required="true" />
+			<input type="password" id="lp-password" class="lp-input-text lp-input-password" name="password" placeholder="<?php echo JText::_('PLG_SYSTEM_LOGINPOPUP_PASSWORD'); ?>" required="true" />
 		</div>
 
 		<?php if (count($twofactormethods) > 1) : ?>
@@ -63,16 +59,8 @@ $loginAction		= $isCb
 			</ul>
 		</div>
 
-		<?php if ($isCb) : ?>
-			<input type="hidden" name="option" value="com_comprofiler" />
-			<input type="hidden" name="view" value="login" />
-			<input type="hidden" name="op2" value="login" />
-			<input type="hidden" name="message" value="0" />
-			<input type="hidden" name="loginfrom" value="loginmodule" />
-		<?php else : ?>
-			<input type="hidden" name="option" value="com_users" />
-			<input type="hidden" name="task" value="user.login" />
-		<?php endif; ?>
+		<input type="hidden" name="option" value="com_users" />
+		<input type="hidden" name="task" value="user.login" />
 		<input type="hidden" name="return" value="<?php echo $return; ?>" />
 		<?php echo JHtml::_('form.token'); ?>
 	</form>

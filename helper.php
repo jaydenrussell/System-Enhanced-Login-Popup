@@ -28,11 +28,6 @@ class PlgSystemLoginPopupHelper {
 		$app    = JFactory::getApplication();
 		$router = $app::getRouter();
 
-		// Community Builder mode uses CB's own return format (B: + base64 absolute URL)
-		if (self::isComprofiler($params)) {
-			return self::getCbReturnURL($params, $type);
-		}
-
 		// Dynamic redirect only applies to login, not logout
 		if ($type === 'login' && (int) $params->get('redirect_enabled', 0) === 1) {
 			return self::getDynamicReturnURL($params);
@@ -40,95 +35,6 @@ class PlgSystemLoginPopupHelper {
 
 		// Original static behavior
 		return self::getStaticReturnURL($params, $type);
-	}
-
-	/**
-	 * Whether the popup should post to Community Builder's login/logout handler.
-	 *
-	 * 'auto' (default) detects whether the Community Builder component is
-	 * installed and enabled, so the popup works on both plain Joomla sites and
-	 * CB sites without manual configuration.
-	 *
-	 * @param   JRegistry  $params  plugin parameters
-	 *
-	 * @return boolean
-	 */
-	public static function isComprofiler($params) {
-		$loginSystem = (string) $params->get('login_system', 'auto');
-
-		if ($loginSystem === 'comprofiler') {
-			return true;
-		}
-
-		if ($loginSystem === 'joomla') {
-			return false;
-		}
-
-		return self::cbComponentEnabled();
-	}
-
-	/**
-	 * Detect whether the Community Builder component is installed and enabled.
-	 *
-	 * @return boolean
-	 */
-	private static function cbComponentEnabled() {
-		if (class_exists('JComponentHelper') && method_exists('JComponentHelper', 'isEnabled')) {
-			try {
-				return (bool) JComponentHelper::isEnabled('com_comprofiler');
-			} catch (Exception $e) {
-				// fall through to the database check
-			}
-		}
-
-		try {
-			$db = JFactory::getDbo();
-			$query = $db->getQuery(true)
-				->select('COUNT(*)')
-				->from($db->quoteName('#__extensions'))
-				->where($db->quoteName('type') . ' = ' . $db->quote('component'))
-				->where($db->quoteName('element') . ' = ' . $db->quote('com_comprofiler'))
-				->where($db->quoteName('enabled') . ' = 1');
-
-			$db->setQuery($query);
-
-			return (bool) $db->loadResult();
-		} catch (Exception $e) {
-			return false;
-		}
-	}
-
-	/**
-	 * Build a Community Builder compatible return value.
-	 *
-	 * CB encodes its login/logout return as 'B:' followed by the base64
-	 * encoding of an absolute URL (e.g. B:aHR0cDovL2V4YW1wbGUuY29tL2NwLXByb2ZpbGU=).
-	 *
-	 * @param   JRegistry  $params  plugin parameters
-	 * @param   string     $type    return type ('login' or 'logout')
-	 *
-	 * @return string  CB-encoded return value
-	 */
-	private static function getCbReturnURL($params, $type) {
-		$targetId = 0;
-
-		if ($type === 'login' && (int) $params->get('redirect_enabled', 0) === 1) {
-			$targetId = (int) self::getDynamicTargetId($params);
-		}
-
-		if ($targetId <= 0) {
-			$targetId = (int) $params->get($type);
-		}
-
-		if ($targetId > 0) {
-			$sef = self::toSefUrl('index.php?Itemid=' . $targetId);
-		} else {
-			$sef = self::toSefUrl(self::getCurrentPageInternalUrl());
-		}
-
-		$abs = JUri::root() . ltrim($sef, '/');
-
-		return 'B:' . base64_encode($abs);
 	}
 
 	/**
@@ -218,23 +124,6 @@ class PlgSystemLoginPopupHelper {
 		$url = 'index.php?Itemid=' . $itemid;
 
 		return base64_encode($url);
-	}
-
-	/**
-	 * Convert an internal URL to its SEF/alias route when possible.
-	 *
-	 * @param   string  $internal  internal URL (e.g. index.php?Itemid=113)
-	 *
-	 * @return string  routed URL (e.g. /cb-profile)
-	 */
-	private static function toSefUrl($internal) {
-		$route = JRoute::_($internal, false);
-
-		if ($route) {
-			return $route;
-		}
-
-		return $internal;
 	}
 
 	/**
