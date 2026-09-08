@@ -117,6 +117,7 @@
 				var doUnblur = this.unblur_header === 1;
 				if (!selector) return;
 
+				var targetZ = this.unblur_zindex || 2002;
 				var elements;
 				try {
 					elements = document.querySelectorAll(selector);
@@ -132,7 +133,7 @@
 						// Yes = boost selected elements ABOVE the overlay (2000)
 						// and modal (2001). The target z-index is configurable
 						// via the unblur_zindex plugin parameter.
-						el.style.zIndex = this.unblur_zindex || 2002;
+						el.style.zIndex = targetZ;
 					} else {
 						// No = leave as-is (overlay at 2000 will cover it naturally)
 					}
