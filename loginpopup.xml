@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
+ 
 /**
  * @copyright	Copyright (c) 2014 Skylin e Technology Ltd (http://extstore.com). All r ights reserved.
  * @copyright	Copyright (c)  2026 Jayden Russell. All rights reserved.
@@ -14,7 +15,7 @@
 	<license>GNU General  Public License version 2 or later; see LICENS E.txt</license>
 	<authorEmail>jaydenrussell@ users.noreply.github.com</authorEmail>
 	<aut horUrl>https://github.com/jaydenrussell</auth orUrl>
-	<version>3.0.10</version>
+	<version>3.0.11</version>
 	<descript ion>
 	<![CDATA[
 		Enhanced Login Popup —  Modern layout with club branding, password to ggle, customizable title, full-page blur, res ponsive design, and dynamic page-based redire ct rules (subform-driven). Originally based o n ExtStore Login Popup v1.0.1 for Joomla 3.x. 
@@ -45,7 +46,8 @@
 	</langu ages>
 
 	<config>
-		<fields name="params"> 
+		<fields name="params">
+ 
 			<fieldset name="basic">
 				<field
 				 	name="layout"
@@ -68,7 +70,8 @@
 
 				<fi eld
 					name="logo_size"
-					type="list" 
+					type="list"
+ 
 					default="medium"
 					label="PLG_SYSTE M_LOGINPOPUP_FIELD_LOGO_SIZE_LABEL"
 					des cription="PLG_SYSTEM_LOGINPOPUP_FIELD_LOGO_SI ZE_DESC"
@@ -184,7 +187,8 @@
 					name="selector"
 	 				type="text"
 					label="PLG_SYSTEM_LOGIN POPUP_FIELD_SELECTOR_LABEL"
-					description ="PLG_SYSTEM_LOGINPOPUP_FIELD_SELECTOR_DESC" 
+					description ="PLG_SYSTEM_LOGINPOPUP_FIELD_SELECTOR_DESC"
+ 
 					default="a[href=#login], a[href=#logout ]"
 				/>
 
@@ -253,7 +257,8 @@
 			</fieldset>
 
 			<fi eldset name="redirect" label="PLG_SYSTEM_LOGI NPOPUP_FIELDSET_REDIRECT_LABEL">
-				<field 
+				<field
+ 
 					name="redirect_enabled"
 					type="rad io"
 					class="btn-group btn-group-yesno"
