@@ -55,9 +55,6 @@ class PlgSystemLoginPopupHelper {
 			$currentId = $app->input->getInt('Itemid');
 		}
 
-		// DEBUG: Log currentId and redirect_map
-		$app->enqueueMessage('[DEBUG] currentId=' . $currentId . ', redirect_map=' . json_encode($params->get('redirect_map', array())), 'notice');
-
 		// 1. Check redirect_map for matching source_itemid
 		$redirectMap = $params->get('redirect_map', array());
 
@@ -152,39 +149,39 @@ class PlgSystemLoginPopupHelper {
 		$router = $app::getRouter();
 		$url    = null;
 
-		\$loginItemid = \$params->get(\$type);
-		\$app->enqueueMessage('[DEBUG] getStaticReturnURL: type=' . \$type . ', loginItemid=' . json_encode(\$loginItemid), 'notice');
+		$logFile = JFactory::getConfig()->get('log_path') . '/loginpopup_debug.log';
+		file_put_contents($logFile, date('c') . " STATIC type=$type param=" . var_export($params->get($type), true) . PHP_EOL, FILE_APPEND);
 
-		if (\$itemid = (int) \$params->get(\$type)) {
-			\$db    = JFactory::getDbo();
-			\$query = \$db->getQuery(true)
-				->select(\$db->quoteName('link'))
-				->from(\$db->quoteName('#__menu'))
-				->where(\$db->quoteName('published') . '=1')
-				->where(\$db->quoteName('id') . '=' . \$db->quote(\$itemid));
+		if ($itemid = (int) $params->get($type)) {
+			$db    = JFactory::getDbo();
+			$query = $db->getQuery(true)
+				->select($db->quoteName('link'))
+				->from($db->quoteName('#__menu'))
+				->where($db->quoteName('published') . '=1')
+				->where($db->quoteName('id') . '=' . $db->quote($itemid));
 
-			\$db->setQuery(\$query);
+			$db->setQuery($query);
 
-			if (\$link = \$db->loadResult()) {
-				if (\$router->getMode() == JROUTER_MODE_SEF) {
-					\$url = 'index.php?Itemid=' . \$itemid;
+			if ($link = $db->loadResult()) {
+				if ($router->getMode() == JROUTER_MODE_SEF) {
+					$url = 'index.php?Itemid=' . $itemid;
 				} else {
-					\$url = \$link . '&Itemid=' . \$itemid;
+					$url = $link . '&Itemid=' . $itemid;
 				}
-				\$app->enqueueMessage('[DEBUG] getStaticReturnURL: found link=' . \$link . ', itemid=' . \$itemid . ', url=' . \$url, 'notice');
+				file_put_contents($logFile, date('c') . " STATIC found link=$link itemid=$itemid url=$url" . PHP_EOL, FILE_APPEND);
 			} else {
-				\$app->enqueueMessage('[DEBUG] getStaticReturnURL: no link found for itemid=' . \$itemid, 'notice');
+				file_put_contents($logFile, date('c') . " STATIC no link found for itemid=$itemid" . PHP_EOL, FILE_APPEND);
 			}
 		} else {
-			\$app->enqueueMessage('[DEBUG] getStaticReturnURL: no itemid found for type=' . \$type, 'notice');
+			file_put_contents($logFile, date('c') . " STATIC no itemid for type=$type" . PHP_EOL, FILE_APPEND);
 		}
 
-		if (!\$url) {
-			\$app->enqueueMessage('[DEBUG] getStaticReturnURL: falling back to current page', 'notice');
-			\$url = self::getCurrentPageUrl();
+		if (!$url) {
+			file_put_contents($logFile, date('c') . " STATIC falling back to current page" . PHP_EOL, FILE_APPEND);
+			$url = self::getCurrentPageUrl();
 		}
 
-		return \$url;
+		return $url;
 	}
 
 
