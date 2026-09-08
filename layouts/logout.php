@@ -16,7 +16,7 @@ $clientConfig	= PlgSystemLoginPopupHelper::encodeClientConfig(PlgSystemLoginPopu
 <div id="lp-popup" class="lp-wrapper" data-lp-config="<?php echo htmlspecialchars($clientConfig, ENT_QUOTES, 'UTF-8'); ?>">
 	<button class="lp-close" type="button" title="Close (Esc)">×</button>
 
-	<form action="<?php echo JRoute::_('index.php', true, $displayData->get('usesecure')); ?>" method="post" class="lp-form">
+	<form action="<?php echo JRoute::_('index.php?option=com_users&task=user.logout', true, $displayData->get('usesecure')); ?>" method="post" class="lp-form">
 		<?php if ($displayData->get('greeting')) : ?>
 			<div class="lp-login-greeting">
 				<?php echo JText::sprintf('PLG_SYSTEM_LOGINPOPUP_HINAME', htmlspecialchars($displayData->get('name') == 0 ? $user->get('name') : $user->get('username'))); ?>

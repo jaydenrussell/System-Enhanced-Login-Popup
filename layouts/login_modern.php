@@ -42,7 +42,7 @@ $modalPosition = $displayData->get('modal_position', 'center');
 		<img src="<?php echo htmlspecialchars(JRoute::_($logo), ENT_QUOTES, 'UTF-8'); ?>" alt="Club Logo" class="lp-logo-size-<?php echo htmlspecialchars($logoSize, ENT_QUOTES, 'UTF-8'); ?>" />
 	</div>
 
-	<form action="<?php echo JRoute::_('index.php', true, $displayData->get('usesecure')); ?>" method="post" class="lp-form" autocomplete="on">
+	<form action="<?php echo JRoute::_('index.php?option=com_users&task=user.login', true, $displayData->get('usesecure')); ?>" method="post" class="lp-form" autocomplete="on">
 		<?php if ($customTitleEnabled) : ?>
 			<h3><?php echo htmlspecialchars($customTitleText, ENT_QUOTES, 'UTF-8'); ?></h3>
 		<?php endif; ?>
